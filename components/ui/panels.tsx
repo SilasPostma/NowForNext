@@ -1,15 +1,17 @@
 "use client";
 import React, { useRef, useEffect } from "react";
 
+const prefix = process.env.NODE_ENV === "production" ? "/NowForNext" : "";
+
 const PANELS_DATA = [
-  { type: "video", src: "/intro_video_speed.mp4" },
-  { type: "image", src: "/a-block.png" },
-  { type: "image", src: "/b-block.png" },
-  { type: "image", src: "/c-block.png" },
-  { type: "image", src: "/d-block.png" },
-  { type: "image", src: "/e-block.png" },
-  { type: "image", src: "/f-block.png" },
-  { type: "video", src: "/outro_video_speed.mp4" },
+  { type: "video", src: `${prefix}/intro_video_speed.mp4` },
+  { type: "image", src: `${prefix}/a-block.png` },
+  { type: "image", src: `${prefix}/b-block.png` },
+  { type: "image", src: `${prefix}/c-block.png` },
+  { type: "image", src: `${prefix}/d-block.png` },
+  { type: "image", src: `${prefix}/e-block.png` },
+  { type: "image", src: `${prefix}/f-block.png` },
+  { type: "video", src: `${prefix}/outro_video_speed.mp4` },
 ];
 
 const PanelGrid = () => {
