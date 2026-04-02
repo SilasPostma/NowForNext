@@ -64,7 +64,9 @@ const PanelGrid = () => {
           return (
             <div
               key={index}
-              ref={(el) => (containerRefs.current[index] = el)}
+              ref={(el) => {
+                containerRefs.current[index] = el;
+              }}
               className="relative h-[600vh] bg-[#FEFEFE]"
             >
               <div className="sticky top-0 h-screen w-full flex items-center justify-center py-[5%]">
@@ -73,7 +75,9 @@ const PanelGrid = () => {
                   style={{ aspectRatio: "16 / 9" }}
                 >
                   <video
-                    ref={(el) => (videoRefs.current[index] = el)}
+                    ref={(el) => {
+                      videoRefs.current[index] = el;
+                    }}
                     muted
                     playsInline
                     preload="auto"
