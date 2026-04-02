@@ -9,7 +9,7 @@ const PANELS_DATA = [
   { type: "image", src: "/d-block.png" },
   { type: "image", src: "/e-block.png" },
   { type: "image", src: "/f-block.png" },
-  { type: "video", src: "/outro_video.mp4" },
+  { type: "video", src: "/outro_video_speed.mp4" },
 ];
 
 const PanelGrid = () => {
