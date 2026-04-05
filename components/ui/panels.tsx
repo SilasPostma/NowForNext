@@ -55,7 +55,7 @@ const PanelGrid = () => {
 
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [PANELS_DATA]);
+  }, []);
 
   return (
     <main className="w-full">
