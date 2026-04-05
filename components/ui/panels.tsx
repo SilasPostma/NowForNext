@@ -5,12 +5,12 @@ const prefix = process.env.NODE_ENV === "production" ? "/NowForNext" : "";
 
 const PANELS_DATA = [
   { type: "video", src: `${prefix}/intro_video_speed.mp4` },
-  { type: "image", src: `${prefix}/a-block.png` },
-  { type: "image", src: `${prefix}/b-block.png` },
-  { type: "image", src: `${prefix}/c-block.png` },
-  { type: "image", src: `${prefix}/d-block.png` },
-  { type: "image", src: `${prefix}/e-block.png` },
-  { type: "image", src: `${prefix}/f-block.png` },
+  { type: "image", src: `${prefix}/a-block.webp` },
+  { type: "image", src: `${prefix}/b-block.webp` },
+  { type: "image", src: `${prefix}/c-block.webp` },
+  { type: "image", src: `${prefix}/d-block.webp` },
+  { type: "image", src: `${prefix}/e-block.webp` },
+  { type: "image", src: `${prefix}/f-block.webp` },
   { type: "video", src: `${prefix}/outro_video_speed.mp4` },
 ];
 
