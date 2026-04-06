@@ -58,7 +58,7 @@ const Header = () => {
           {/* Reverse Logo (Active state) */}
           <img
             src={`${prefix}/nfn_logo_reverse.webp`}
-            alt="NowForNext Reverse"
+            alt="NowForNext"
             className={`absolute inset-0 w-full h-auto transition-opacity duration-300 ease-in-out ${
               activeId === "landing-page" ? "opacity-100" : "opacity-0"
             }`}
