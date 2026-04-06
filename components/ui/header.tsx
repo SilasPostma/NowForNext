@@ -10,8 +10,8 @@ const Header = () => {
     { letter: "F", href: "#block-f" },
   ];
   const navLinks = [
-    { text: "WHY WE STARTED", href: "why-we-started" },
-    { text: "WHO WE ARE", href: "who-we-are" },
+    { text: "WHY WE STARTED", href: "#why-we-started" },
+    { text: "WHO WE ARE", href: "#who-we-are" },
     { text: "CONTACT", href: "contact" },
   ];
 

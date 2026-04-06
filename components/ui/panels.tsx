@@ -11,6 +11,11 @@ const PANELS_DATA = [
   { type: "image", src: `${prefix}/d-block.webp`, id: "block-d" },
   { type: "image", src: `${prefix}/e-block.webp`, id: "block-e" },
   { type: "image", src: `${prefix}/f-block.webp`, id: "block-f" },
+  {
+    type: "youtube",
+    src: "https://www.youtube.com/embed/VYF7ZbEnoao",
+    id: "why-we-started",
+  },
   { type: "video", src: `${prefix}/outro_video_speed.mp4`, id: "outro_video" },
 ];
 
@@ -61,6 +66,7 @@ const PanelGrid = () => {
     <main className="w-full">
       {PANELS_DATA.map((panel, index) => {
         const isVideo = panel.type === "video";
+        const isYouTube = panel.type === "youtube";
 
         if (isVideo) {
           return (
@@ -91,6 +97,28 @@ const PanelGrid = () => {
                     <source src={panel.src} type="video/mp4" />
                   </video>
                 </div>
+              </div>
+            </div>
+          );
+        }
+
+        if (isYouTube) {
+          return (
+            <div
+              key={index}
+              id={panel.id}
+              className="relative w-full bg-[#FEFEFE] flex items-center justify-center"
+              style={{ aspectRatio: "35 / 18" }}
+            >
+              <div className="w-[60%] aspect-video">
+                <iframe
+                  className="w-full h-full"
+                  src={panel.src}
+                  title="Why We Started"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
               </div>
             </div>
           );
