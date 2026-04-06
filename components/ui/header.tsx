@@ -47,6 +47,7 @@ const Header = () => {
         <a
           className="flex-shrink-0 relative w-[160px] h-[60px]"
           href="#landing-page"
+          onClick={() => setMenuOpen((prev) => !prev)}
         >
           <img
             src={`${prefix}/nfn_logo.webp`}
@@ -64,12 +65,12 @@ const Header = () => {
           />
         </a>
 
-        <div className="hidden lg:flex items-center gap-10">
+        <div className="hidden lg:flex items-center gap-6 xl:gap-12">
           {letters.map((item) => (
             <a
               key={item.letter}
               href={item.href}
-              className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg transition-colors duration-200 cursor-pointer
+              className={`w-9 h-9 xl:w-12 xl:h-12 rounded-full flex items-center justify-center font-bold text-lg xl:text-xl transition-colors duration-200 cursor-pointer
               ${
                 activeId === item.id
                   ? "bg-[#1B286B] text-white"
@@ -86,7 +87,7 @@ const Header = () => {
             <a
               key={item.text}
               href={item.href}
-              className={`font-bold text-m tracking-widest transition-colors duration-200 whitespace-nowrap
+              className={`font-bold text-m xl:text-lg tracking-widest transition-colors duration-200 whitespace-nowrap
               ${
                 activeId === item.id
                   ? "text-[#2D3E61]"
@@ -140,13 +141,13 @@ const Header = () => {
         }`}
       >
         <div className="bg-[#FEFEFE] px-4 pb-6 pt-4 items-start max-w-xs">
-          <div className="grid grid-cols-3 gap-3 ">
+          <div className="grid grid-cols-3 gap-3 xl:gap-4">
             {letters.map((item) => (
               <a
                 key={item.letter}
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
-                className={`flex h-16 w-16 items-center justify-center rounded-full font-bold text-lg transition-colors duration-200
+                className={`flex h-14 w-14 xl:h-16 xl:w-16 items-center justify-center rounded-full font-bold text-lg xl:text-xl transition-colors duration-200
                 ${
                   activeId === item.id
                     ? "bg-[#1B286B] text-white"
@@ -164,7 +165,7 @@ const Header = () => {
                 key={item.text}
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
-                className={`pl-1 py-3 text-center font-bold tracking-widest transition-colors duration-200 
+                className={`pl-1 py-3 text-center font-bold tracking-widest text-sm xl:text-base transition-colors duration-200 
                   ${
                     activeId === item.id
                       ? "text-[#1B286B]"
