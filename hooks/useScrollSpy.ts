@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export const useScrollSpy = (ids: string[], offset: string = "-25% 0px -70% 0px") => {
+export const useScrollSpy = (ids: string[], offset: string = "-25% 0px -74% 0px") => {
   const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {

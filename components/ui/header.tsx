@@ -44,9 +44,13 @@ const Header = () => {
         {/* Logo Section - Aligned Left */}
         <a className="flex-shrink-0" href="#landing-page">
           <img
-            src={`${prefix}/nfn_logo.webp`}
+            src={
+              activeId === "landing-page"
+                ? `${prefix}/nfn_logo_reverse.webp`
+                : `${prefix}/nfn_logo.webp`
+            }
             alt="NowForNext"
-            className="w-[160px] h-auto"
+            className="w-[160px] h-auto transition-all duration-300"
           />
         </a>
 
