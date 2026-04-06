@@ -1,9 +1,12 @@
 "use client";
+import { useState } from "react";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 
 const prefix = process.env.NODE_ENV === "production" ? "/NowForNext" : "";
 
 const Header = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const letters = [
     { letter: "A", href: "#are-you-ready", id: "are-you-ready" },
     {
@@ -28,25 +31,23 @@ const Header = () => {
   const navLinks = [
     { text: "WHY WE STARTED", href: "#why-we-started", id: "why-we-started" },
     { text: "WHO WE ARE", href: "#who-we-are", id: "who-we-are" },
-    { text: "CONTACT", href: "contact" },
+    { text: "CONTACT" },
   ];
 
   const allIds: string[] = [
     "landing-page",
     ...letters.map((l) => l.id),
-    ...navLinks.map((n) => n.id).filter((id): id is string => id !== undefined), // This is the magic filter
+    ...navLinks.map((n) => n.id).filter((id): id is string => id !== undefined),
   ];
   const activeId = useScrollSpy(allIds);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#FEFEFE] border-b-[4px] border-gray-200 px-12 pb-3 pt-4 font-['Helvetica_Neue',_Helvetica,_Arial,_sans-serif] select-none">
+    <header className="sticky top-0 z-50 w-full bg-[#FEFEFE] border-b-[4px] border-gray-200 px-6 pb-3 pt-4 font-['Helvetica_Neue',_Helvetica,_Arial,_sans-serif] select-none">
       <div className="max-w-[1400px] mx-auto flex items-center justify-between">
-        {/* Logo Section - Aligned Left */}
         <a
           className="flex-shrink-0 relative w-[160px] h-[60px]"
           href="#landing-page"
         >
-          {/* Primary Logo (Default) */}
           <img
             src={`${prefix}/nfn_logo.webp`}
             alt="NowForNext"
@@ -54,8 +55,6 @@ const Header = () => {
               activeId === "landing-page" ? "opacity-0" : "opacity-100"
             }`}
           />
-
-          {/* Reverse Logo (Active state) */}
           <img
             src={`${prefix}/nfn_logo_reverse.webp`}
             alt="NowForNext"
@@ -65,8 +64,7 @@ const Header = () => {
           />
         </a>
 
-        {/* Letter Icons Section - Centered with specific spacing */}
-        <div className="flex items-center gap-10">
+        <div className="hidden lg:flex items-center gap-10">
           {letters.map((item) => (
             <a
               key={item.letter}
@@ -74,7 +72,7 @@ const Header = () => {
               className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg transition-colors duration-200 cursor-pointer
               ${
                 activeId === item.id
-                  ? "bg-[#1B286B] text-white" // Active Style (Matching hover)
+                  ? "bg-[#1B286B] text-white"
                   : "bg-[#BCC6D1] text-white hover:bg-[#1B286B]"
               }`}
             >
@@ -83,8 +81,7 @@ const Header = () => {
           ))}
         </div>
 
-        {/* Nav Links Section - Aligned Right with consistent gaps */}
-        <nav className="flex items-center gap-12">
+        <nav className="hidden lg:flex items-center gap-12">
           {navLinks.map((item) => (
             <a
               key={item.text}
@@ -92,14 +89,94 @@ const Header = () => {
               className={`font-bold text-m tracking-widest transition-colors duration-200 whitespace-nowrap
               ${
                 activeId === item.id
-                  ? "text-[#2D3E61]" // Active Style
-                  : "text-[#8A9AB0] hover:text-[#2D3E61]"
+                  ? "text-[#2D3E61]"
+                  : "text-[#9EA9BA] hover:text-[#2D3E61]"
               }`}
             >
               {item.text}
             </a>
           ))}
         </nav>
+
+        <button
+          type="button"
+          onClick={() => setMenuOpen((prev) => !prev)}
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#FEFEFE]  transition hover:text-[#2D3E61] text-[#8A9AB0] lg:hidden"
+          aria-expanded={menuOpen}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+        >
+          {menuOpen ? (
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              className="h-8 w-8"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            >
+              <path d="M6 6l12 12" />
+              <path d="M6 18L18 6" />
+            </svg>
+          ) : (
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              className="h-8 w-8"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            >
+              <path d="M4 7h16" />
+              <path d="M4 12h16" />
+              <path d="M4 17h16" />
+            </svg>
+          )}
+        </button>
+      </div>
+
+      <div
+        className={`lg:hidden overflow-hidden transition-[max-height,opacity] duration-300 ease-in-out ${
+          menuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="bg-[#FEFEFE] px-4 pb-6 pt-4 items-start max-w-xs">
+          <div className="grid grid-cols-3 gap-3 ">
+            {letters.map((item) => (
+              <a
+                key={item.letter}
+                href={item.href}
+                onClick={() => setMenuOpen(false)}
+                className={`flex h-16 w-16 items-center justify-center rounded-full font-bold text-lg transition-colors duration-200
+                ${
+                  activeId === item.id
+                    ? "bg-[#1B286B] text-white"
+                    : "bg-[#BCC6D1] text-white hover:bg-[#1B286B]"
+                }`}
+              >
+                {item.letter}
+              </a>
+            ))}
+          </div>
+
+          <div className="mt-5 flex flex-col items-start gap-3">
+            {navLinks.map((item) => (
+              <a
+                key={item.text}
+                href={item.href}
+                onClick={() => setMenuOpen(false)}
+                className={`pl-1 py-3 text-center font-bold tracking-widest transition-colors duration-200 
+                  ${
+                    activeId === item.id
+                      ? "text-[#1B286B]"
+                      : "text-[#9EA9BA] hover:text-[#1B286B]"
+                  }
+                  `}
+              >
+                {item.text}
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
     </header>
   );
