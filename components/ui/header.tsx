@@ -45,7 +45,7 @@ const Header = () => {
     <header className="sticky top-0 z-50 w-full bg-[#FEFEFE] px-4 xl:px-6 pb-3 pt-4 font-['Helvetica_Neue',_Helvetica,_Arial,_sans-serif] select-none">
       <div className="max-w-[1400px] mx-auto flex items-center justify-between">
         <a
-          className="flex-shrink-0 relative w-[160px] h-[60px]"
+          className="flex-shrink-0 relative w-[180px] h-[65px]"
           href="#landing-page"
           onClick={() => setMenuOpen((prev) => !prev)}
         >
