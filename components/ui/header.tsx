@@ -42,15 +42,26 @@ const Header = () => {
     <header className="sticky top-0 z-50 w-full bg-[#FEFEFE] border-b-[4px] border-gray-200 px-12 pb-3 pt-4 font-['Helvetica_Neue',_Helvetica,_Arial,_sans-serif] select-none">
       <div className="max-w-[1400px] mx-auto flex items-center justify-between">
         {/* Logo Section - Aligned Left */}
-        <a className="flex-shrink-0" href="#landing-page">
+        <a
+          className="flex-shrink-0 relative w-[160px] h-[60px]"
+          href="#landing-page"
+        >
+          {/* Primary Logo (Default) */}
           <img
-            src={
-              activeId === "landing-page"
-                ? `${prefix}/nfn_logo_reverse.webp`
-                : `${prefix}/nfn_logo.webp`
-            }
+            src={`${prefix}/nfn_logo.webp`}
             alt="NowForNext"
-            className="w-[160px] h-auto transition-all duration-300"
+            className={`absolute inset-0 w-full h-auto transition-opacity duration-300 ease-in-out ${
+              activeId === "landing-page" ? "opacity-0" : "opacity-100"
+            }`}
+          />
+
+          {/* Reverse Logo (Active state) */}
+          <img
+            src={`${prefix}/nfn_logo_reverse.webp`}
+            alt="NowForNext Reverse"
+            className={`absolute inset-0 w-full h-auto transition-opacity duration-300 ease-in-out ${
+              activeId === "landing-page" ? "opacity-100" : "opacity-0"
+            }`}
           />
         </a>
 
