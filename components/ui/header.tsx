@@ -42,7 +42,7 @@ const Header = () => {
   const activeId = useScrollSpy(allIds);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#FEFEFE] border-b-[4px] border-gray-200 px-6 pb-3 pt-4 font-['Helvetica_Neue',_Helvetica,_Arial,_sans-serif] select-none">
+    <header className="sticky top-0 z-50 w-full bg-[#FEFEFE] border-b-[4px] border-gray-200 px-4 xl:px-6 pb-3 pt-4 font-['Helvetica_Neue',_Helvetica,_Arial,_sans-serif] select-none">
       <div className="max-w-[1400px] mx-auto flex items-center justify-between">
         <a
           className="flex-shrink-0 relative w-[160px] h-[60px]"
@@ -52,14 +52,14 @@ const Header = () => {
           <img
             src={`${prefix}/nfn_logo.webp`}
             alt="NowForNext"
-            className={`absolute inset-0 w-full h-auto transition-opacity duration-300 ease-in-out ${
+            className={`absolute inset-0 w-full h-auto transition-opacity duration-300 ease-in-out pt-1 ${
               activeId === "landing-page" ? "opacity-0" : "opacity-100"
             }`}
           />
           <img
             src={`${prefix}/nfn_logo_reverse.webp`}
             alt="NowForNext"
-            className={`absolute inset-0 w-full h-auto transition-opacity duration-300 ease-in-out ${
+            className={`absolute inset-0 w-full h-auto transition-opacity duration-300 ease-in-out pt-1 ${
               activeId === "landing-page" ? "opacity-100" : "opacity-0"
             }`}
           />

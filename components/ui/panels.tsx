@@ -122,7 +122,7 @@ const PanelGrid = () => {
               className="relative w-full bg-[#FEFEFE] flex items-center justify-center py-20"
               style={{ aspectRatio: "35 / 18" }}
             >
-              <div className="w-[60%] max-w-[1200px] aspect-video">
+              <div className="w-[80%] lg:w-[60%] max-w-[1200px] aspect-video">
                 <iframe
                   className="w-full h-full"
                   src={panel.src}
