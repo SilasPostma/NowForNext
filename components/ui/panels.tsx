@@ -4,14 +4,14 @@ import React, { useRef, useEffect } from "react";
 const prefix = process.env.NODE_ENV === "production" ? "/NowForNext" : "";
 
 const PANELS_DATA = [
-  { type: "video", src: `${prefix}/intro_video_speed.mp4` },
-  { type: "image", src: `${prefix}/a-block.webp` },
-  { type: "image", src: `${prefix}/b-block.webp` },
-  { type: "image", src: `${prefix}/c-block.webp` },
-  { type: "image", src: `${prefix}/d-block.webp` },
-  { type: "image", src: `${prefix}/e-block.webp` },
-  { type: "image", src: `${prefix}/f-block.webp` },
-  { type: "video", src: `${prefix}/outro_video_speed.mp4` },
+  { type: "video", src: `${prefix}/intro_video_speed.mp4`, id: "intro_video" },
+  { type: "image", src: `${prefix}/a-block.webp`, id: "block-a" },
+  { type: "image", src: `${prefix}/b-block.webp`, id: "block-b" },
+  { type: "image", src: `${prefix}/c-block.webp`, id: "block-c" },
+  { type: "image", src: `${prefix}/d-block.webp`, id: "block-d" },
+  { type: "image", src: `${prefix}/e-block.webp`, id: "block-e" },
+  { type: "image", src: `${prefix}/f-block.webp`, id: "block-f" },
+  { type: "video", src: `${prefix}/outro_video_speed.mp4`, id: "outro_video" },
 ];
 
 const PanelGrid = () => {
@@ -70,6 +70,7 @@ const PanelGrid = () => {
                 containerRefs.current[index] = el;
               }}
               className="relative h-[600vh] bg-[#FEFEFE]"
+              id={panel.id}
             >
               <div className="sticky top-0 h-screen w-full flex items-center justify-center py-[5%]">
                 <div
@@ -100,6 +101,7 @@ const PanelGrid = () => {
             key={index}
             className="relative w-full bg-gray-200 overflow-hidden"
             style={{ aspectRatio: "35 / 18" }}
+            id={panel.id}
           >
             <img
               src={panel.src}

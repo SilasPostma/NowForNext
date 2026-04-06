@@ -1,7 +1,14 @@
 const prefix = process.env.NODE_ENV === "production" ? "/NowForNext" : "";
 
 const Header = () => {
-  const letters = ["A", "B", "C", "D", "E", "F"];
+  const letters = [
+    { letter: "A", href: "#block-a" },
+    { letter: "B", href: "#block-b" },
+    { letter: "C", href: "#block-c" },
+    { letter: "D", href: "#block-d" },
+    { letter: "E", href: "#block-e" },
+    { letter: "F", href: "#block-f" },
+  ];
   const navLinks = ["WHY WE STARTED", "WHO WE ARE", "CONTACT"];
 
   return (
@@ -18,13 +25,14 @@ const Header = () => {
 
         {/* Letter Icons Section - Centered with specific spacing */}
         <div className="flex items-center gap-10">
-          {letters.map((letter) => (
-            <div
-              key={letter}
+          {letters.map((item) => (
+            <a
+              key={item.letter}
               className="w-10 h-10 rounded-full bg-[#BCC6D1] flex items-center justify-center text-white font-bold text-lg hover:bg-[#1B286B] transition-colors duration-200 cursor-pointer"
+              href={item.href}
             >
-              {letter}
-            </div>
+              {item.letter}
+            </a>
           ))}
         </div>
 
