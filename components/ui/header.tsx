@@ -31,10 +31,10 @@ const Header = () => {
     { text: "CONTACT", href: "contact" },
   ];
 
-  const allIds = [
-    ...letters.map((l) => l.id),
-    ...navLinks.map((n) => n.id),
+  const allIds: string[] = [
     "landing-page",
+    ...letters.map((l) => l.id),
+    ...navLinks.map((n) => n.id).filter((id): id is string => id !== undefined), // This is the magic filter
   ];
   const activeId = useScrollSpy(allIds);
 
