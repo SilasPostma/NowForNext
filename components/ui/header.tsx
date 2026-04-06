@@ -91,7 +91,7 @@ Best regards,
           />
         </a>
 
-        <div className="hidden lg:flex items-center gap-6 xl:gap-12">
+        <div className="hidden lg:flex items-center gap-6 lg:gap-8 xl:gap-10">
           {letters.map((item) => (
             <a
               key={item.letter}
@@ -108,7 +108,7 @@ Best regards,
           ))}
         </div>
 
-        <nav className="hidden lg:flex items-center gap-12">
+        <nav className="hidden lg:flex items-center gap-6 lg:gap-8 xl:gap-10">
           {navLinks.map((item) => (
             <a
               key={item.text}
