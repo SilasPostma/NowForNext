@@ -6,6 +6,32 @@ const prefix = process.env.NODE_ENV === "production" ? "/NowForNext" : "";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const email = "test@gmail.com";
+  const subject = "Inquiry from NowForNext website";
+  const bodyText = `Hello,
+
+I am interested in your services and would like to learn more.
+
+Best regards,
+
+[Your Name]
+[Organization]
+[Phone Number]
+[Email Address]`;
+
+  const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+
+  const handleMailClick = async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1000);
+    } catch (err) {
+      console.error("Could not copy email address:", err);
+    }
+  };
 
   const letters = [
     { letter: "A", href: "#are-you-ready", id: "are-you-ready" },
@@ -31,7 +57,7 @@ const Header = () => {
   const navLinks = [
     { text: "WHY WE STARTED", href: "#why-we-started", id: "why-we-started" },
     { text: "WHO WE ARE", href: "#who-we-are", id: "who-we-are" },
-    { text: "CONTACT" },
+    { text: "CONTACT", href: mailtoLink },
   ];
 
   const allIds: string[] = [
@@ -87,6 +113,9 @@ const Header = () => {
             <a
               key={item.text}
               href={item.href}
+              onClick={item.text === "CONTACT" ? handleMailClick : undefined}
+              target={item.text === "CONTACT" ? "_blank" : undefined}
+              rel={item.text === "CONTACT" ? "noopener noreferrer" : undefined}
               className={`font-bold text-m xl:text-lg tracking-widest transition-colors duration-200 whitespace-nowrap
               ${
                 activeId === item.id
@@ -94,7 +123,7 @@ const Header = () => {
                   : "text-[#9EA9BA] hover:text-[#2D3E61]"
               }`}
             >
-              {item.text}
+              {item.text === "CONTACT" && copied ? "EMAIL COPIED" : item.text}
             </a>
           ))}
         </nav>
@@ -164,7 +193,15 @@ const Header = () => {
               <a
                 key={item.text}
                 href={item.href}
-                onClick={() => setMenuOpen(false)}
+                onClick={
+                  item.text === "CONTACT"
+                    ? () => handleMailClick()
+                    : () => setMenuOpen(false)
+                }
+                target={item.text === "CONTACT" ? "_blank" : undefined}
+                rel={
+                  item.text === "CONTACT" ? "noopener noreferrer" : undefined
+                }
                 className={`pl-1 py-3 text-center font-bold tracking-widest text-sm xl:text-base transition-colors duration-200 
                   ${
                     activeId === item.id
@@ -173,7 +210,7 @@ const Header = () => {
                   }
                   `}
               >
-                {item.text}
+                {item.text === "CONTACT" && copied ? "EMAIL COPIED" : item.text}
               </a>
             ))}
           </div>
