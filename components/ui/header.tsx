@@ -2,12 +2,12 @@ const prefix = process.env.NODE_ENV === "production" ? "/NowForNext" : "";
 
 const Header = () => {
   const letters = [
-    { letter: "A", href: "#block-a" },
-    { letter: "B", href: "#block-b" },
-    { letter: "C", href: "#block-c" },
-    { letter: "D", href: "#block-d" },
-    { letter: "E", href: "#block-e" },
-    { letter: "F", href: "#block-f" },
+    { letter: "A", href: "#are-you-ready" },
+    { letter: "B", href: "#charge-organisational-batteries" },
+    { letter: "C", href: "#challenge-limiting-beliefs" },
+    { letter: "D", href: "#reset-strategic-direction" },
+    { letter: "E", href: "#build-two-engines" },
+    { letter: "F", href: "#ecosystems-thinking" },
   ];
   const navLinks = [
     { text: "WHY WE STARTED", href: "#why-we-started" },
@@ -19,7 +19,7 @@ const Header = () => {
     <header className="sticky top-0 z-50 w-full bg-[#FEFEFE] border-b-[4px] border-gray-200 px-12 pb-3 pt-4 font-['Helvetica_Neue',_Helvetica,_Arial,_sans-serif]">
       <div className="max-w-[1400px] mx-auto flex items-center justify-between">
         {/* Logo Section - Aligned Left */}
-        <a className="flex-shrink-0" href="#intro_video">
+        <a className="flex-shrink-0" href="#landing-page">
           <img
             src={`${prefix}/nfn_logo.webp`}
             alt="NowForNext"
