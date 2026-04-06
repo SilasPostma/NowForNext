@@ -1,19 +1,42 @@
+"use client";
+import { useScrollSpy } from "@/hooks/useScrollSpy";
+
 const prefix = process.env.NODE_ENV === "production" ? "/NowForNext" : "";
 
 const Header = () => {
   const letters = [
-    { letter: "A", href: "#are-you-ready" },
-    { letter: "B", href: "#charge-organisational-batteries" },
-    { letter: "C", href: "#challenge-limiting-beliefs" },
-    { letter: "D", href: "#reset-strategic-direction" },
-    { letter: "E", href: "#build-two-engines" },
-    { letter: "F", href: "#ecosystems-thinking" },
+    { letter: "A", href: "#are-you-ready", id: "are-you-ready" },
+    {
+      letter: "B",
+      href: "#charge-organisational-batteries",
+      id: "charge-organisational-batteries",
+    },
+    {
+      letter: "C",
+      href: "#challenge-limiting-beliefs",
+      id: "challenge-limiting-beliefs",
+    },
+    {
+      letter: "D",
+      href: "#reset-strategic-direction",
+      id: "reset-strategic-direction",
+    },
+    { letter: "E", href: "#build-two-engines", id: "build-two-engines" },
+    { letter: "F", href: "#ecosystems-thinking", id: "ecosystems-thinking" },
   ];
+
   const navLinks = [
-    { text: "WHY WE STARTED", href: "#why-we-started" },
-    { text: "WHO WE ARE", href: "#who-we-are" },
+    { text: "WHY WE STARTED", href: "#why-we-started", id: "why-we-started" },
+    { text: "WHO WE ARE", href: "#who-we-are", id: "who-we-are" },
     { text: "CONTACT", href: "contact" },
   ];
+
+  const allIds = [
+    ...letters.map((l) => l.id),
+    ...navLinks.map((n) => n.id),
+    "landing-page",
+  ];
+  const activeId = useScrollSpy(allIds);
 
   return (
     <header className="sticky top-0 z-50 w-full bg-[#FEFEFE] border-b-[4px] border-gray-200 px-12 pb-3 pt-4 font-['Helvetica_Neue',_Helvetica,_Arial,_sans-serif]">
@@ -32,8 +55,13 @@ const Header = () => {
           {letters.map((item) => (
             <a
               key={item.letter}
-              className="w-10 h-10 rounded-full bg-[#BCC6D1] flex items-center justify-center text-white font-bold text-lg hover:bg-[#1B286B] transition-colors duration-200 cursor-pointer"
               href={item.href}
+              className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg transition-colors duration-200 cursor-pointer
+              ${
+                activeId === item.id
+                  ? "bg-[#1B286B] text-white" // Active Style (Matching hover)
+                  : "bg-[#BCC6D1] text-white hover:bg-[#1B286B]"
+              }`}
             >
               {item.letter}
             </a>
@@ -46,7 +74,12 @@ const Header = () => {
             <a
               key={item.text}
               href={item.href}
-              className="text-[#8A9AB0] font-bold text-m tracking-widest hover:text-[#2D3E61] transition-colors duration-200 whitespace-nowrap"
+              className={`font-bold text-m tracking-widest transition-colors duration-200 whitespace-nowrap
+              ${
+                activeId === item.id
+                  ? "text-[#2D3E61]" // Active Style
+                  : "text-[#8A9AB0] hover:text-[#2D3E61]"
+              }`}
             >
               {item.text}
             </a>
