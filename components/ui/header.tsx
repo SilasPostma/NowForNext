@@ -9,19 +9,23 @@ const Header = () => {
     { letter: "E", href: "#block-e" },
     { letter: "F", href: "#block-f" },
   ];
-  const navLinks = ["WHY WE STARTED", "WHO WE ARE", "CONTACT"];
+  const navLinks = [
+    { text: "WHY WE STARTED", href: "why-we-started" },
+    { text: "WHO WE ARE", href: "who-we-are" },
+    { text: "CONTACT", href: "contact" },
+  ];
 
   return (
     <header className="sticky top-0 z-50 w-full bg-[#FEFEFE] border-b-[4px] border-gray-200 px-12 pb-3 pt-4 font-['Helvetica_Neue',_Helvetica,_Arial,_sans-serif]">
       <div className="max-w-[1400px] mx-auto flex items-center justify-between">
         {/* Logo Section - Aligned Left */}
-        <div className="flex-shrink-0">
+        <a className="flex-shrink-0" href="#intro_video">
           <img
             src={`${prefix}/nfn_logo.webp`}
             alt="NowForNext"
             className="w-[160px] h-auto"
           />
-        </div>
+        </a>
 
         {/* Letter Icons Section - Centered with specific spacing */}
         <div className="flex items-center gap-10">
@@ -38,13 +42,13 @@ const Header = () => {
 
         {/* Nav Links Section - Aligned Right with consistent gaps */}
         <nav className="flex items-center gap-12">
-          {navLinks.map((link) => (
+          {navLinks.map((item) => (
             <a
-              key={link}
-              href={`#${link.toLowerCase().replace(/\s+/g, "-")}`} //adjust
+              key={item.text}
+              href={item.href}
               className="text-[#8A9AB0] font-bold text-m tracking-widest hover:text-[#2D3E61] transition-colors duration-200 whitespace-nowrap"
             >
-              {link}
+              {item.text}
             </a>
           ))}
         </nav>
