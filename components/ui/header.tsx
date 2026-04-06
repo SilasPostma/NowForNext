@@ -42,7 +42,7 @@ const Header = () => {
   const activeId = useScrollSpy(allIds);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#FEFEFE] border-b-[4px] border-gray-200 px-4 xl:px-6 pb-3 pt-4 font-['Helvetica_Neue',_Helvetica,_Arial,_sans-serif] select-none">
+    <header className="sticky top-0 z-50 w-full bg-[#FEFEFE] px-4 xl:px-6 pb-3 pt-4 font-['Helvetica_Neue',_Helvetica,_Arial,_sans-serif] select-none">
       <div className="max-w-[1400px] mx-auto flex items-center justify-between">
         <a
           className="flex-shrink-0 relative w-[160px] h-[60px]"
@@ -179,6 +179,7 @@ const Header = () => {
           </div>
         </div>
       </div>
+      <div className="absolute inset-x-[5%] bottom-0 h-[4px] bg-gray-200 " />
     </header>
   );
 };
