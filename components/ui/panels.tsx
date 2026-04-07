@@ -36,6 +36,7 @@ const PANELS_DATA = [
 const PanelGrid = ({ activeId }: { activeId: string }) => {
   const containerRefs = useRef<(HTMLDivElement | null)[]>([]);
   const canvasRefs = useRef<(HTMLCanvasElement | null)[]>([]);
+  const frameRefs = useRef<number[]>([]);
   const imagesRef = useRef<{ [key: string]: HTMLImageElement[] }>({ intro: [], outro: [] });
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
 
@@ -75,8 +76,16 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
           const progress = Math.max(0, Math.min(1, -rect.top / scrollableHeight));
           
           // Determine which frame to draw
-          const frameIndex = Math.max(1, Math.min(config.totalFrames, Math.ceil(progress * config.totalFrames)));
-          const img = sequence[frameIndex];
+          const targetFrameIndex = Math.max(1, Math.min(config.totalFrames, Math.ceil(progress * config.totalFrames)));
+          
+          if (frameRefs.current[index] === undefined) {
+             frameRefs.current[index] = 1;
+          }
+
+          frameRefs.current[index] += (targetFrameIndex - frameRefs.current[index]) * 0.12;
+          
+          const currentFrame = Math.round(frameRefs.current[index]);
+          const img = sequence[currentFrame];
 
           if (img && img.complete) {
             // Clear and draw with "Cover" logic
@@ -129,7 +138,7 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
             <div
               key={index}
               ref={(el) => { containerRefs.current[index] = el; }}
-              className="relative h-[500vh] bg-[#FEFEFE]" // Adjusted height for better scroll feel
+              className="relative h-[400vh] bg-[#FEFEFE]"
               id={panel.id}
             >
               <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
