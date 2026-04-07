@@ -4,7 +4,7 @@ import React, { useRef, useEffect, useState, useCallback } from "react";
 const prefix = process.env.NODE_ENV === "production" ? "/NowForNext" : "";
 
 const PANELS_DATA = [
-  { type: "video", src: `${prefix}/intro_video_speed.mp4`, id: "landing-page" },
+  { type: "video", src: `${prefix}/intro_video_speed_keyframes.mp4`, id: "landing-page" },
   { type: "image", src: `${prefix}/a-block.webp`, id: "are-you-ready" },
   {
     type: "image",
@@ -28,7 +28,7 @@ const PANELS_DATA = [
     src: "https://www.youtube.com/embed/VYF7ZbEnoao",
     id: "why-we-started",
   },
-  { type: "video", src: `${prefix}/outro_video_speed.mp4`, id: "who-we-are" },
+  { type: "video", src: `${prefix}/outro_video_speed_keyframes.mp4`, id: "who-we-are" },
 ];
 
 const PanelGrid = ({ activeId }: { activeId: string }) => {
@@ -37,42 +37,62 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
 
   useEffect(() => {
-    let requestRunning = false;
+    let animationFrameId: number;
+    const targetProgress: number[] = Array(PANELS_DATA.length).fill(0);
+    const currentProgress: number[] = Array(PANELS_DATA.length).fill(0);
+    let isInitialized = false;
 
-    const updateVideoFrames = () => {
+    const updateScrollTargets = () => {
       PANELS_DATA.forEach((panel, index) => {
         if (panel.type !== "video") return;
 
         const container = containerRefs.current[index];
-        const video = videoRefs.current[index];
-
-        if (container && video && video.readyState >= 2) {
+        if (container) {
           const rect = container.getBoundingClientRect();
           const totalScrollableHeight = rect.height - window.innerHeight;
-
-          // Progress is 0 when top of container is at top of screen
-          // Progress is 1 when bottom of container is at top of screen
           const progress = -rect.top / totalScrollableHeight;
-          const clampedProgress = Math.max(0, Math.min(1, progress));
-
-          // Directly updating currentTime inside the animation frame
-          if (video.duration) {
-            video.currentTime = video.duration * clampedProgress;
+          
+          targetProgress[index] = Math.max(0, Math.min(1, progress));
+          
+          // Instantly match current to target on first load so it doesn't scrub from 0
+          if (!isInitialized) {
+            currentProgress[index] = targetProgress[index];
           }
         }
       });
-      requestRunning = false;
+      isInitialized = true;
     };
 
-    const onScroll = () => {
-      if (!requestRunning) {
-        requestRunning = true;
-        requestAnimationFrame(updateVideoFrames);
-      }
+    const loop = () => {
+      PANELS_DATA.forEach((panel, index) => {
+        if (panel.type !== "video") return;
+
+        const video = videoRefs.current[index];
+        if (video && video.readyState >= 2 && video.duration) {
+          const target = targetProgress[index];
+          let current = currentProgress[index];
+
+          // Lerp factor (0.08). Lower = smoother/slower, Higher = snappier
+          current = current + (target - current) * 0.08;
+          currentProgress[index] = current;
+
+          // Only update if difference is noticeable to save browser performance
+          if (Math.abs(target - current) > 0.0001) {
+            video.currentTime = video.duration * current;
+          }
+        }
+      });
+      animationFrameId = requestAnimationFrame(loop);
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("scroll", updateScrollTargets, { passive: true });
+    updateScrollTargets(); // Initial calculation
+    animationFrameId = requestAnimationFrame(loop);
+
+    return () => {
+      window.removeEventListener("scroll", updateScrollTargets);
+      cancelAnimationFrame(animationFrameId);
+    };
   }, []);
   const handleScroll = useCallback(() => {
     const introContainer = containerRefs.current[0];
