@@ -161,11 +161,11 @@ Best regards,
       </div>
 
       <div
-        className={`lg:hidden overflow-hidden transition-[max-height,opacity] duration-300 ease-in-out ${
+        className={`lg:hidden absolute top-full left-0 w-full overflow-hidden transition-[max-height,opacity] duration-300 ease-in-out ${
           menuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="bg-[#FEFEFE] px-4 pb-6 pt-4 items-start max-w-xs">
+        <div className="bg-[#FEFEFE] px-4 pb-6 pt-4 shadow-xl border-b border-gray-200">
           <div className="grid grid-cols-3 gap-3 m:gap-4">
             {letters.map((item) => (
               <a
