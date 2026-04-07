@@ -25,7 +25,7 @@ const PANELS_DATA = [
   { type: "image", src: `${prefix}/f-block.webp`, id: "ecosystems-thinking" },
   {
     type: "youtube",
-    src: "https://www.youtube.com/embed/VYF7ZbEnoao",
+    src: "https://www.youtube.com/embed/G1hKzCkywM8",
     id: "why-we-started",
   },
   { type: "video", src: `${prefix}/outro_video_speed_keyframes.mp4`, id: "who-we-are" },
