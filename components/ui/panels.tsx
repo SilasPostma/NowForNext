@@ -68,7 +68,7 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
         if (panel.type !== "video") return;
 
         const video = videoRefs.current[index];
-        if (video && video.readyState >= 2 && video.duration) {
+        if (video && video.readyState >= 1 && video.duration) {
           const target = targetProgress[index];
           let current = currentProgress[index];
 
@@ -77,8 +77,9 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
           currentProgress[index] = current;
 
           // Only update if difference is noticeable to save browser performance
-          if (Math.abs(target - current) > 0.0001) {
+          if (Math.abs(target - current) > 0.0001 || !video.dataset.hasRenderedInitially) {
             video.currentTime = video.duration * current;
+            video.dataset.hasRenderedInitially = "true";
           }
         }
       });
