@@ -4,23 +4,16 @@ import React, { useRef, useEffect, useState, useCallback } from "react";
 const prefix = process.env.NODE_ENV === "production" ? "/NowForNext" : "";
 
 const PANELS_DATA = [
-  { type: "video", src: `${prefix}/intro_video_speed_keyframes.mp4`, id: "landing-page" },
+  { 
+    type: "video", 
+    src: `${prefix}/intro_video_speed_keyframes.mp4`, 
+    poster: `${prefix}/a-block.webp`, // Recommended: Add a poster image
+    id: "landing-page" 
+  },
   { type: "image", src: `${prefix}/a-block.webp`, id: "are-you-ready" },
-  {
-    type: "image",
-    src: `${prefix}/b-block.webp`,
-    id: "charge-organisational-batteries",
-  },
-  {
-    type: "image",
-    src: `${prefix}/c-block.webp`,
-    id: "challenge-limiting-beliefs",
-  },
-  {
-    type: "image",
-    src: `${prefix}/d-block.webp`,
-    id: "reset-strategic-direction",
-  },
+  { type: "image", src: `${prefix}/b-block.webp`, id: "charge-organisational-batteries" },
+  { type: "image", src: `${prefix}/c-block.webp`, id: "challenge-limiting-beliefs" },
+  { type: "image", src: `${prefix}/d-block.webp`, id: "reset-strategic-direction" },
   { type: "image", src: `${prefix}/e-block.webp`, id: "build-two-engines" },
   { type: "image", src: `${prefix}/f-block.webp`, id: "ecosystems-thinking" },
   {
@@ -28,13 +21,30 @@ const PANELS_DATA = [
     src: "https://www.youtube.com/embed/G1hKzCkywM8",
     id: "why-we-started",
   },
-  { type: "video", src: `${prefix}/outro_video_speed_keyframes.mp4`, id: "who-we-are" },
+  { 
+    type: "video", 
+    src: `${prefix}/outro_video_speed_keyframes.mp4`, 
+    poster: `${prefix}/f-block.webp`, // Recommended: Add a poster image
+    id: "who-we-are" 
+  },
 ];
 
 const PanelGrid = ({ activeId }: { activeId: string }) => {
   const containerRefs = useRef<(HTMLDivElement | null)[]>([]);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+
+  // Critical for Mobile: "Wake up" the video decoder
+  const handleVideoInit = (index: number) => {
+    const video = videoRefs.current[index];
+    if (video) {
+      video.load(); // Force start download
+      // Briefly play/pause to "unlock" the video for seek control on mobile
+      video.play().then(() => {
+        video.pause();
+      }).catch((e) => console.log("Autoplay blocked/handled", e));
+    }
+  };
 
   useEffect(() => {
     let animationFrameId: number;
@@ -54,7 +64,6 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
           
           targetProgress[index] = Math.max(0, Math.min(1, progress));
           
-          // Instantly match current to target on first load so it doesn't scrub from 0
           if (!isInitialized) {
             currentProgress[index] = targetProgress[index];
           }
@@ -68,18 +77,16 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
         if (panel.type !== "video") return;
 
         const video = videoRefs.current[index];
-        if (video && video.readyState >= 1 && video.duration) {
+        // Check if video is actually ready to be scrubbed
+        if (video && video.readyState >= 2 && video.duration) {
           const target = targetProgress[index];
           let current = currentProgress[index];
 
-          // Lerp factor (0.08). Lower = smoother/slower, Higher = snappier
           current = current + (target - current) * 0.08;
           currentProgress[index] = current;
 
-          // Only update if difference is noticeable to save browser performance
-          if (Math.abs(target - current) > 0.0001 || !video.dataset.hasRenderedInitially) {
+          if (Math.abs(target - current) > 0.0001) {
             video.currentTime = video.duration * current;
-            video.dataset.hasRenderedInitially = "true";
           }
         }
       });
@@ -87,7 +94,7 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
     };
 
     window.addEventListener("scroll", updateScrollTargets, { passive: true });
-    updateScrollTargets(); // Initial calculation
+    updateScrollTargets();
     animationFrameId = requestAnimationFrame(loop);
 
     return () => {
@@ -95,36 +102,26 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
+
   const handleScroll = useCallback(() => {
     const introContainer = containerRefs.current[0];
-    const outroContainer = containerRefs.current[8]; // outro is index 8
-
+    const outroContainer = containerRefs.current[8];
     let shouldShow = false;
 
-    // Show indicator near the top of the intro video
     if (introContainer) {
       const rect = introContainer.getBoundingClientRect();
-      if (rect.top > -150) {
-        shouldShow = true;
-      }
+      if (rect.top > -150) shouldShow = true;
     }
-
-    // Show indicator at the start of the outro video
     if (outroContainer && !shouldShow) {
       const rect = outroContainer.getBoundingClientRect();
-      // Show when the video sticks to the top (with 50px tolerance) 
-      // and for the first 150px of scrolling
-      if (rect.top <= 50 && rect.top > -150) {
-        shouldShow = true;
-      }
+      if (rect.top <= 50 && rect.top > -150) shouldShow = true;
     }
-
     setShowScrollIndicator(shouldShow);
   }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Call once to set initial state
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
@@ -138,27 +135,21 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
           return (
             <div
               key={index}
-              ref={(el) => {
-                containerRefs.current[index] = el;
-              }}
+              ref={(el) => { containerRefs.current[index] = el; }}
               className="relative h-[600vh] bg-[#FEFEFE]"
               id={panel.id}
             >
               <div className="sticky top-0 h-screen w-full flex items-center justify-center py-[5%]">
-                <div
-                  className="w-full h-full"
-                  style={{ aspectRatio: "16 / 9" }}
-                >
+                <div className="w-full h-full" style={{ aspectRatio: "16 / 9" }}>
                   <video
-                    ref={(el) => {
-                      videoRefs.current[index] = el;
-                    }}
-                    muted // Crucial for mobile
-                    playsInline // Crucial for iOS
-                    webkit-playsinline="true" // Fallback for older iOS
-                    preload="auto" // Encourages mobile to fetch metadata
+                    ref={(el) => { videoRefs.current[index] = el; }}
+                    onLoadedMetadata={() => handleVideoInit(index)}
+                    muted
+                    playsInline
+                    webkit-playsinline="true"
+                    preload="auto"
+                    poster={panel.poster}
                     className="w-full h-full object-contain"
-                    controls={false}
                   >
                     <source src={panel.src} type="video/mp4" />
                   </video>
@@ -181,7 +172,6 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
                   className="w-full h-full"
                   src={panel.src}
                   title="Why We Started"
-                  frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 ></iframe>
@@ -209,14 +199,7 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
         <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-40 animate-bounce">
           <div className="flex flex-col items-center text-[#9EA9BA]">
             <span className="text-sm font-medium mb-2">Scroll to explore</span>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M7 13l5 5 5-5" />
               <line x1="12" y1="2" x2="12" y2="18" />
             </svg>
