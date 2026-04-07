@@ -153,11 +153,11 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
                     ref={(el) => {
                       videoRefs.current[index] = el;
                     }}
-                    muted
-                    playsInline
-                    preload="auto"
+                    muted // Crucial for mobile
+                    playsInline // Crucial for iOS
+                    webkit-playsinline="true" // Fallback for older iOS
+                    preload="auto" // Encourages mobile to fetch metadata
                     className="w-full h-full object-contain"
-                    // Optimization: ensures the browser doesn't try to play it normally
                     controls={false}
                   >
                     <source src={panel.src} type="video/mp4" />
