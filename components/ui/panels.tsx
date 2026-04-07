@@ -47,7 +47,6 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
       for (let i = 1; i <= config.totalFrames; i++) {
         const img = new Image();
         img.src = `${config.directory}/${key}_frame_${i.toString().padStart(4, "0")}.webp`;
-        console.log(img.src);
         frames[i] = img;
       }
       imagesRef.current[key] = frames;

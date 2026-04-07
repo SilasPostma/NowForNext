@@ -166,7 +166,7 @@ Best regards,
         }`}
       >
         <div className="bg-[#FEFEFE] px-4 pb-6 pt-4 items-start max-w-xs">
-          <div className="grid grid-cols-3 gap-3 xl:gap-4">
+          <div className="grid grid-cols-3 gap-3 m:gap-4">
             {letters.map((item) => (
               <a
                 key={item.letter}
