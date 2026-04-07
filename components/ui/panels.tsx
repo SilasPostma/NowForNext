@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 
 const prefix = process.env.NODE_ENV === "production" ? "/NowForNext" : "";
 
@@ -31,9 +31,10 @@ const PANELS_DATA = [
   { type: "video", src: `${prefix}/outro_video_speed.mp4`, id: "who-we-are" },
 ];
 
-const PanelGrid = () => {
+const PanelGrid = ({ activeId }: { activeId: string }) => {
   const containerRefs = useRef<(HTMLDivElement | null)[]>([]);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
 
   useEffect(() => {
     let requestRunning = false;
@@ -73,6 +74,38 @@ const PanelGrid = () => {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+  const handleScroll = useCallback(() => {
+    const introContainer = containerRefs.current[0];
+    const outroContainer = containerRefs.current[8]; // outro is index 8
+
+    let shouldShow = false;
+
+    // Show indicator near the top of the intro video
+    if (introContainer) {
+      const rect = introContainer.getBoundingClientRect();
+      if (rect.top > -150) {
+        shouldShow = true;
+      }
+    }
+
+    // Show indicator at the start of the outro video
+    if (outroContainer && !shouldShow) {
+      const rect = outroContainer.getBoundingClientRect();
+      // Show when the video sticks to the top (with 50px tolerance) 
+      // and for the first 150px of scrolling
+      if (rect.top <= 50 && rect.top > -150) {
+        shouldShow = true;
+      }
+    }
+
+    setShowScrollIndicator(shouldShow);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Call once to set initial state
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
   return (
     <main className="w-full">
@@ -151,6 +184,24 @@ const PanelGrid = () => {
           </div>
         );
       })}
+      {showScrollIndicator && (
+        <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-40 animate-bounce">
+          <div className="flex flex-col items-center text-[#9EA9BA]">
+            <span className="text-sm font-medium mb-2">Scroll to explore</span>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M7 13l5 5 5-5" />
+              <line x1="12" y1="2" x2="12" y2="18" />
+            </svg>
+          </div>
+        </div>
+      )}
     </main>
   );
 };

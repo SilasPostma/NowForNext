@@ -1,10 +1,13 @@
 "use client";
 import { useState } from "react";
-import { useScrollSpy } from "@/hooks/useScrollSpy";
 
 const prefix = process.env.NODE_ENV === "production" ? "/NowForNext" : "";
 
-const Header = () => {
+interface HeaderProps {
+  activeId: string;
+}
+
+const Header: React.FC<HeaderProps> = ({ activeId }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -59,13 +62,6 @@ Best regards,
     { text: "WHO WE ARE", href: "#who-we-are", id: "who-we-are" },
     { text: "CONTACT", href: mailtoLink },
   ];
-
-  const allIds: string[] = [
-    "landing-page",
-    ...letters.map((l) => l.id),
-    ...navLinks.map((n) => n.id).filter((id): id is string => id !== undefined),
-  ];
-  const activeId = useScrollSpy(allIds);
 
   return (
     <header className="sticky top-0 z-50 w-full bg-[#FEFEFE] px-4 xl:px-6 pb-3 pt-4 font-['Helvetica_Neue',_Helvetica,_Arial,_sans-serif] select-none">
