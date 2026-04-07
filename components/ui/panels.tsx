@@ -7,13 +7,13 @@ const prefix = process.env.NODE_ENV === "production" ? "/NowForNext" : "";
 const SEQUENCES = {
   intro: {
     id: "landing-page",
-    totalFrames: 71, // Change this if you used 15fps or 30fps
+    totalFrames: 71,
     directory: `${prefix}/sequences/intro`,
   },
   outro: {
     id: "who-we-are",
-    totalFrames: 71, // Change this to match your outro frame count
-    directory: `${prefix}/sequences/intro`,
+    totalFrames: 137,
+    directory: `${prefix}/sequences/outro`,
   },
 };
 
@@ -45,7 +45,7 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
       const frames: HTMLImageElement[] = [];
       for (let i = 1; i <= config.totalFrames; i++) {
         const img = new Image();
-        img.src = `${config.directory}/intro_frame_${i.toString().padStart(4, "0")}.webp`;
+        img.src = `${config.directory}/${key}_frame_${i.toString().padStart(4, "0")}.webp`;
         console.log(img.src);
         frames[i] = img;
       }
