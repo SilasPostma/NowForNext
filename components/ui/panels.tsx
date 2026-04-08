@@ -26,8 +26,8 @@ const PANELS_DATA = [
   { type: "image", src: `${prefix}/e-block.webp`, mobileSrc: `${prefix}/e-block-mobile.webp`, id: "build-two-engines" },
   { type: "image", src: `${prefix}/f-block.webp`, mobileSrc: `${prefix}/f-block-mobile.webp`, id: "ecosystems-thinking" },
   {
-    type: "youtube",
-    src: "https://www.youtube.com/embed/G1hKzCkywM8",
+    type: "video",
+    src: "https://player.vimeo.com/video/655102517?title=0&byline=0&portrait=0",
     id: "why-we-started",
   },
   { 
@@ -170,14 +170,14 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
           );
         }
 
-        if (panel.type === "youtube") {
+        if (panel.type === "video") {
           return (
             <div key={index} id={panel.id} className="relative w-full bg-[#FEFEFE] flex items-center justify-center py-20 aspect-[35/18]">
               <div className="w-[80%] lg:w-[60%] max-w-[1200px] aspect-video">
                 <iframe
                   className="w-full h-full"
                   src={panel.src}
-                  title="YouTube video"
+                  title="Vimeo video"
                   allowFullScreen
                 ></iframe>
               </div>
