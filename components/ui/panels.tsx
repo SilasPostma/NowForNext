@@ -49,6 +49,8 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
   const canvasRefs = useRef<(HTMLCanvasElement | null)[]>([]);
   const frameRefs = useRef<number[]>([]);
   const imagesRef = useRef<{ [key: string]: HTMLImageElement[] }>({ intro: [], outro: [] });
+  const layoutCacheRef = useRef<{top: number, height: number}[]>([]);
+  const scrollYRef = useRef(0);
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
 
   // 1. Preload Images on Mount
@@ -64,6 +66,25 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
     });
   }, []);
 
+  // 1.5 Cache layout positions to prevent layout thrashing
+  useEffect(() => {
+    const updateLayoutCache = () => {
+      layoutCacheRef.current = containerRefs.current.map((el) => {
+        if (!el) return { top: 0, height: 0 };
+        const rect = el.getBoundingClientRect();
+        return { top: rect.top + window.scrollY, height: rect.height };
+      });
+    };
+
+    // Minor delay to ensure images/fonts have settled layout
+    const timer = setTimeout(updateLayoutCache, 50);
+    window.addEventListener("resize", updateLayoutCache);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", updateLayoutCache);
+    };
+  }, []);
+
   // 2. The Animation & Scroll Loop
   useEffect(() => {
     let animationFrameId: number;
@@ -75,18 +96,18 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
         // Skip rendering sequence on mobile if it has mobileImages alternative
         if (window.innerWidth < 768 && panel.mobileImages && panel.mobileImages.length > 0) return;
 
-        const container = containerRefs.current[index];
         const canvas = canvasRefs.current[index];
         const context = canvas?.getContext("2d");
         const sequence = imagesRef.current[panel.sequenceKey as "intro" | "outro"];
         const config = SEQUENCES[panel.sequenceKey as "intro" | "outro"];
+        const layoutCache = layoutCacheRef.current[index];
 
-        if (container && canvas && context && sequence.length > 0) {
-          const rect = container.getBoundingClientRect();
+        if (layoutCache && canvas && context && sequence.length > 0) {
+          const rectTop = layoutCache.top - scrollYRef.current;
           
           // Calculate progress (0 to 1)
-          const scrollableHeight = rect.height - window.innerHeight;
-          const progress = Math.max(0, Math.min(1, -rect.top / scrollableHeight));
+          const scrollableHeight = layoutCache.height - window.innerHeight;
+          const progress = Math.max(0, Math.min(1, -rectTop / scrollableHeight));
           
           // Determine which frame to draw
           const targetFrameIndex = Math.max(1, Math.min(config.totalFrames, Math.ceil(progress * config.totalFrames)));
@@ -120,19 +141,21 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
     return () => cancelAnimationFrame(animationFrameId);
   }, []);
 
-  // 3. Scroll Indicator Logic
+  // 3. Scroll Indicator Logic & Tracking
   const handleScroll = useCallback(() => {
-    const introContainer = containerRefs.current[0];
-    const outroContainer = containerRefs.current[8];
+    scrollYRef.current = window.scrollY;
+
+    const introLayout = layoutCacheRef.current[0];
+    const outroLayout = layoutCacheRef.current[8];
     let shouldShow = false;
 
-    if (introContainer) {
-      const rect = introContainer.getBoundingClientRect();
-      if (rect.top > -150) shouldShow = true;
+    if (introLayout) {
+      const top = introLayout.top - scrollYRef.current;
+      if (top > -150) shouldShow = true;
     }
-    if (outroContainer && !shouldShow) {
-      const rect = outroContainer.getBoundingClientRect();
-      if (rect.top <= 50 && rect.top > -150) shouldShow = true;
+    if (outroLayout && !shouldShow) {
+      const top = outroLayout.top - scrollYRef.current;
+      if (top <= 50 && top > -150) shouldShow = true;
     }
     setShowScrollIndicator(shouldShow);
   }, []);
