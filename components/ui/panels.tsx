@@ -19,18 +19,23 @@ const SEQUENCES = {
 
 const PANELS_DATA = [
   { type: "sequence", sequenceKey: "intro", id: "landing-page" },
-  { type: "image", src: `${prefix}/a-block.webp`, id: "are-you-ready" },
-  { type: "image", src: `${prefix}/b-block.webp`, id: "charge-organisational-batteries" },
-  { type: "image", src: `${prefix}/c-block.webp`, id: "challenge-limiting-beliefs" },
-  { type: "image", src: `${prefix}/d-block.webp`, id: "reset-strategic-direction" },
-  { type: "image", src: `${prefix}/e-block.webp`, id: "build-two-engines" },
-  { type: "image", src: `${prefix}/f-block.webp`, id: "ecosystems-thinking" },
+  { type: "image", src: `${prefix}/a-block.webp`, mobileSrc: `${prefix}/a-block-mobile.webp`, id: "are-you-ready" },
+  { type: "image", src: `${prefix}/b-block.webp`, mobileSrc: `${prefix}/b-block-mobile.webp`, id: "charge-organisational-batteries" },
+  { type: "image", src: `${prefix}/c-block.webp`, mobileSrc: `${prefix}/c-block-mobile.webp`, id: "challenge-limiting-beliefs" },
+  { type: "image", src: `${prefix}/d-block.webp`, mobileSrc: `${prefix}/d-block-mobile.webp`, id: "reset-strategic-direction" },
+  { type: "image", src: `${prefix}/e-block.webp`, mobileSrc: `${prefix}/e-block-mobile.webp`, id: "build-two-engines" },
+  { type: "image", src: `${prefix}/f-block.webp`, mobileSrc: `${prefix}/f-block-mobile.webp`, id: "ecosystems-thinking" },
   {
     type: "youtube",
     src: "https://www.youtube.com/embed/G1hKzCkywM8",
     id: "why-we-started",
   },
-  { type: "sequence", sequenceKey: "outro", id: "who-we-are" },
+  { 
+    type: "sequence", 
+    sequenceKey: "outro", 
+    id: "who-we-are",
+    mobileImages: [`${prefix}/animation_1_mobile.webp`, `${prefix}/animation_2_mobile.webp`]
+  },
 ];
 
 const PanelGrid = ({ activeId }: { activeId: string }) => {
@@ -133,21 +138,34 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
     <main className="w-full">
       {PANELS_DATA.map((panel, index) => {
         if (panel.type === "sequence") {
+          const mobileImgs = (panel as any).mobileImages as string[] | undefined;
+          const hasMobileImages = Array.isArray(mobileImgs) && mobileImgs.length > 0;
+
           return (
-            <div
-              key={index}
-              ref={(el) => { containerRefs.current[index] = el; }}
-              className="relative h-[400vh] bg-[#FEFEFE]"
+            <div 
+              key={index} 
               id={panel.id}
+              ref={(el) => { containerRefs.current[index] = el; }}
+              className="w-full"
             >
-              <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
-                <canvas
-                  ref={(el) => { canvasRefs.current[index] = el; }}
-                  width={1920}
-                  height={1080}
-                  className="w-[90%] lg:w-[80%] h-full object-contain"
-                />
+              <div className={`relative h-[400vh] bg-[#FEFEFE] ${hasMobileImages ? "hidden md:block" : ""}`}>
+                <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+                  <canvas
+                    ref={(el) => { canvasRefs.current[index] = el; }}
+                    width={1920}
+                    height={1080}
+                    className="w-[90%] lg:w-[80%] h-full object-contain"
+                  />
+                </div>
               </div>
+
+              {hasMobileImages && mobileImgs && (
+                <div className="md:hidden flex flex-col w-full bg-[#FEFEFE]">
+                  {mobileImgs.map((src, imgIndex) => (
+                    <img key={imgIndex} src={src} alt={`Mobile Animation ${imgIndex + 1}`} className="w-full h-auto block" />
+                  ))}
+                </div>
+              )}
             </div>
           );
         }
@@ -167,9 +185,19 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
           );
         }
 
+        const isMobileVariant = panel.type === "image" && "mobileSrc" in panel;
+        const mobileClasses = isMobileVariant ? "md:aspect-[35/18]" : "aspect-[35/18]";
+
         return (
-          <div key={index} id={panel.id} className="relative w-full bg-gray-200 overflow-hidden aspect-[35/18]">
-            <img src={panel.src} alt="Panel" className="absolute inset-0 w-full h-full object-cover" />
+          <div key={index} id={panel.id} className={`relative w-full bg-gray-200 overflow-hidden ${mobileClasses}`}>
+            {isMobileVariant && panel.mobileSrc ? (
+              <picture>
+                <source media="(min-width: 768px)" srcSet={panel.src} />
+                <img src={panel.mobileSrc} alt="Panel" className="block w-full h-auto object-cover md:absolute md:inset-0 md:h-full" />
+              </picture>
+            ) : (
+              <img src={panel.src} alt="Panel" className="absolute inset-0 w-full h-full object-cover" />
+            )}
           </div>
         );
       })}
