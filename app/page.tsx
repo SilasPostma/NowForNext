@@ -2,21 +2,10 @@
 import Panels from "@/components/ui/panels";
 import Header from "@/components/ui/header";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
-
-const allIds = [
-  "landing-page",
-  "are-you-ready",
-  "charge-organisational-batteries",
-  "challenge-limiting-beliefs",
-  "reset-strategic-direction",
-  "build-two-engines",
-  "ecosystems-thinking",
-  "why-we-started",
-  "who-we-are",
-];
+import { SECTION_IDS } from "@/config/sections";
 
 export default function HomePage() {
-  const activeId = useScrollSpy(allIds);
+  const activeId = useScrollSpy([...SECTION_IDS]);
 
   return (
     <main className="w-full">

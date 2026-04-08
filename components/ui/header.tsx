@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { SECTION_IDS, SectionId } from "@/config/sections";
 
 const prefix = process.env.NODE_ENV === "production" ? "/NowForNext" : "";
 
@@ -36,30 +37,18 @@ Best regards,
     }
   };
 
-  const letters = [
-    { letter: "A", href: "#are-you-ready", id: "are-you-ready" },
-    {
-      letter: "B",
-      href: "#charge-organisational-batteries",
-      id: "charge-organisational-batteries",
-    },
-    {
-      letter: "C",
-      href: "#challenge-limiting-beliefs",
-      id: "challenge-limiting-beliefs",
-    },
-    {
-      letter: "D",
-      href: "#reset-strategic-direction",
-      id: "reset-strategic-direction",
-    },
-    { letter: "E", href: "#build-two-engines", id: "build-two-engines" },
-    { letter: "F", href: "#ecosystems-thinking", id: "ecosystems-thinking" },
+  const letters: { letter: string; href: string; id: SectionId }[] = [
+    { letter: "A", href: `#${SECTION_IDS[1]}`, id: SECTION_IDS[1] },
+    { letter: "B", href: `#${SECTION_IDS[2]}`, id: SECTION_IDS[2] },
+    { letter: "C", href: `#${SECTION_IDS[3]}`, id: SECTION_IDS[3] },
+    { letter: "D", href: `#${SECTION_IDS[4]}`, id: SECTION_IDS[4] },
+    { letter: "E", href: `#${SECTION_IDS[5]}`, id: SECTION_IDS[5] },
+    { letter: "F", href: `#${SECTION_IDS[6]}`, id: SECTION_IDS[6] },
   ];
 
-  const navLinks = [
-    { text: "WHY WE STARTED", href: "#why-we-started", id: "why-we-started" },
-    { text: "WHO WE ARE", href: "#who-we-are", id: "who-we-are" },
+  const navLinks: { text: string; href: string; id?: SectionId }[] = [
+    { text: "WHY WE STARTED", href: `#${SECTION_IDS[7]}`, id: SECTION_IDS[7] },
+    { text: "WHO WE ARE", href: `#${SECTION_IDS[8]}`, id: SECTION_IDS[8] },
     { text: "CONTACT", href: mailtoLink },
   ];
 

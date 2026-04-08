@@ -1,5 +1,6 @@
 "use client";
 import React, { useRef, useEffect, useState, useCallback } from "react";
+import { SECTION_IDS, SectionId } from "@/config/sections";
 
 const prefix = process.env.NODE_ENV === "production" ? "/NowForNext" : "";
 
@@ -17,23 +18,28 @@ const SEQUENCES = {
   },
 };
 
-const PANELS_DATA = [
-  { type: "sequence", sequenceKey: "intro", id: "landing-page" },
-  { type: "image", src: `${prefix}/a-block.webp`, mobileSrc: `${prefix}/a-block-mobile.webp`, id: "are-you-ready" },
-  { type: "image", src: `${prefix}/b-block.webp`, mobileSrc: `${prefix}/b-block-mobile.webp`, id: "charge-organisational-batteries" },
-  { type: "image", src: `${prefix}/c-block.webp`, mobileSrc: `${prefix}/c-block-mobile.webp`, id: "challenge-limiting-beliefs" },
-  { type: "image", src: `${prefix}/d-block.webp`, mobileSrc: `${prefix}/d-block-mobile.webp`, id: "reset-strategic-direction" },
-  { type: "image", src: `${prefix}/e-block.webp`, mobileSrc: `${prefix}/e-block-mobile.webp`, id: "build-two-engines" },
-  { type: "image", src: `${prefix}/f-block.webp`, mobileSrc: `${prefix}/f-block-mobile.webp`, id: "ecosystems-thinking" },
+type ImagePanel = { type: "image"; src: string; mobileSrc?: string; id: SectionId; };
+type VideoPanel = { type: "video"; src: string; id: SectionId; };
+type SequencePanel = { type: "sequence"; sequenceKey: "intro" | "outro"; id: SectionId; mobileImages?: string[]; };
+type PanelData = ImagePanel | VideoPanel | SequencePanel;
+
+const PANELS_DATA: PanelData[] = [
+  { type: "sequence", sequenceKey: "intro", id: SECTION_IDS[0] },
+  { type: "image", src: `${prefix}/a-block.webp`, mobileSrc: `${prefix}/a-block-mobile.webp`, id: SECTION_IDS[1] },
+  { type: "image", src: `${prefix}/b-block.webp`, mobileSrc: `${prefix}/b-block-mobile.webp`, id: SECTION_IDS[2] },
+  { type: "image", src: `${prefix}/c-block.webp`, mobileSrc: `${prefix}/c-block-mobile.webp`, id: SECTION_IDS[3] },
+  { type: "image", src: `${prefix}/d-block.webp`, mobileSrc: `${prefix}/d-block-mobile.webp`, id: SECTION_IDS[4] },
+  { type: "image", src: `${prefix}/e-block.webp`, mobileSrc: `${prefix}/e-block-mobile.webp`, id: SECTION_IDS[5] },
+  { type: "image", src: `${prefix}/f-block.webp`, mobileSrc: `${prefix}/f-block-mobile.webp`, id: SECTION_IDS[6] },
   {
     type: "video",
     src: "https://player.vimeo.com/video/655102517?title=0&byline=0&portrait=0",
-    id: "why-we-started",
+    id: SECTION_IDS[7],
   },
   { 
     type: "sequence", 
     sequenceKey: "outro", 
-    id: "who-we-are",
+    id: SECTION_IDS[8],
     mobileImages: [`${prefix}/animation_1_mobile.webp`, `${prefix}/animation_2_mobile.webp`]
   },
 ];
@@ -65,6 +71,9 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
     const renderCanvas = () => {
       PANELS_DATA.forEach((panel, index) => {
         if (panel.type !== "sequence") return;
+
+        // Skip rendering sequence on mobile if it has mobileImages alternative
+        if (window.innerWidth < 768 && panel.mobileImages && panel.mobileImages.length > 0) return;
 
         const container = containerRefs.current[index];
         const canvas = canvasRefs.current[index];
@@ -138,7 +147,7 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
     <main className="w-full">
       {PANELS_DATA.map((panel, index) => {
         if (panel.type === "sequence") {
-          const mobileImgs = (panel as any).mobileImages as string[] | undefined;
+          const mobileImgs = panel.mobileImages;
           const hasMobileImages = Array.isArray(mobileImgs) && mobileImgs.length > 0;
 
           return (
