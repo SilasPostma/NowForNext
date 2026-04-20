@@ -148,6 +148,7 @@ const ContactPanel = ({ id }: { id: SectionId }) => {
                     lineHeight: 1,
                   }}
                 >
+                  →
                 </span>
               </a>
             </div>
@@ -191,6 +192,18 @@ const ContactPanel = ({ id }: { id: SectionId }) => {
                   if (arrow) { arrow.style.opacity = "0"; arrow.style.transform = "translateX(0)"; }
                 }}>
               info@nowfornext.org
+              <span
+                className="email-arrow"
+                style={{
+                  opacity: 0,
+                  transform: "translateX(0)",
+                  transition: "opacity 0.2s, transform 0.2s",
+                  fontSize: "0.9em",
+                  lineHeight: 1,
+                }}
+              >
+                →
+              </span>
               </a>
           </p>
         </div>
