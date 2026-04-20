@@ -9,6 +9,7 @@ export const SECTION_IDS = [
   "why-we-started",
   "who-we-are",
   "what-we-offer",
+  "clients",
   "contact",
 ] as const;
 

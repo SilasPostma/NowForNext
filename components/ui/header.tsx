@@ -24,7 +24,8 @@ const Header: React.FC<HeaderProps> = ({ activeId }) => {
     { text: "WHY WE STARTED", href: `#${SECTION_IDS[7]}`, id: SECTION_IDS[7] },
     { text: "WHO WE ARE",     href: `#${SECTION_IDS[8]}`, id: SECTION_IDS[8] },
     { text: "WHAT WE OFFER",  href: `#${SECTION_IDS[9]}`, id: SECTION_IDS[9] },
-    { text: "CONTACT",        href: `#${SECTION_IDS[10]}`, id: SECTION_IDS[10] },
+    { text: "CLIENTS",        href: `#${SECTION_IDS[10]}`, id: SECTION_IDS[10] },
+    { text: "CONTACT",        href: `#${SECTION_IDS[11]}`, id: SECTION_IDS[11] },
   ];
 
   return (

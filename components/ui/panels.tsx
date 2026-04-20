@@ -23,7 +23,8 @@ type VideoPanel    = { type: "video";      src: string; id: SectionId; };
 type SequencePanel = { type: "sequence";   sequenceKey: "intro" | "outro"; id: SectionId; };
 type ContactPanel  = { type: "contact";    id: SectionId; };
 type WhoWeArePanel = { type: "who-we-are"; id: SectionId; };
-type PanelData = ImagePanel | VideoPanel | SequencePanel | ContactPanel | WhoWeArePanel;
+type ClientsPanel  = { type: "clients";    id: SectionId; };
+type PanelData = ImagePanel | VideoPanel | SequencePanel | ContactPanel | WhoWeArePanel | ClientsPanel;
 
 const PANELS_DATA: PanelData[] = [
   { type: "sequence", sequenceKey: "intro", id: SECTION_IDS[0] },
@@ -36,7 +37,8 @@ const PANELS_DATA: PanelData[] = [
   { type: "video", src: "https://player.vimeo.com/video/655102517?title=0&byline=0&portrait=0", id: SECTION_IDS[7] },
   { type: "who-we-are", id: SECTION_IDS[8] },
   { type: "sequence", sequenceKey: "outro", id: SECTION_IDS[9] },
-  { type: "contact", id: SECTION_IDS[10] },
+  { type: "clients", id: SECTION_IDS[10] },
+  { type: "contact", id: SECTION_IDS[11] },
 ];
 
 // ─── Who We Are Panel ──────────────────────────────────────────────────────────
@@ -133,15 +135,16 @@ const ContactPanel = ({ id }: { id: SectionId }) => {
         style={{ backgroundColor: "#EDEFF2" }}
       >
         <h2
-          className="mb-10 md:mb-14"
-          style={{
-            fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-            fontWeight: 700,
-            fontSize: "clamp(2rem, 4vw, 3rem)",
-            color: "#1B286B",
-            letterSpacing: "-0.01em",
-          }}
-        >
+                className="
+                  self-start mb-6 sm:mb-8 md:mb-10
+                  text-[1.6rem] sm:text-[2rem] md:text-[2.4rem] lg:text-[2.8rem] xl:text-[3rem]
+                  font-extrabold leading-tight tracking-tight
+                "
+                style={{
+                  fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+                  color: "#1B286B",
+                }}
+              >
           CONTACT
         </h2>
 
@@ -250,6 +253,100 @@ const ContactPanel = ({ id }: { id: SectionId }) => {
           </p>
         </div>
       </div>
+    </div>
+  );
+};
+
+// ─── Clients Panel ────────────────────────────────────────────────────────────
+const ClientsPanel = ({ id }: { id: SectionId }) => {
+  const logos = [
+    { src: `${prefix}/logos/swapfiets_logo.webp`, alt: "swapfiets_logo" },
+    { src: `${prefix}/logos/campina_logo.webp`, alt: "campina_logo" },
+    { src: `${prefix}/logos/vinci_logo.webp`, alt: "vinci_logo" },
+    { src: `${prefix}/logos/jumbo_logo.webp`, alt: "jumbo_logo" },
+    { src: `${prefix}/logos/pon_logo.webp`, alt: "pon_logo" },
+    { src: `${prefix}/logos/kiwa_logo.webp`, alt: "kiwa_logo" },
+    { src: `${prefix}/logos/shv_logo.webp`, alt: "shv_logo" },
+    { src: `${prefix}/logos/tpvision_logo.webp`, alt: "tpvision_logo" },
+    { src: `${prefix}/logos/vanoord_logo.webp`, alt: "vanoord_logo" },
+    { src: `${prefix}/logos/dsm_logo.webp`, alt: "dsm_logo" },
+    { src: `${prefix}/logos/johnson_logo.webp`, alt: "johnson_logo" },
+    { src: `${prefix}/logos/basf_logo.webp`, alt: "basf_logo" },
+  ];
+
+  return (
+    <div id={id} className="relative w-full bg-[#FEFEFE]">
+
+      <div className="flex flex-col md:flex-row min-h-[30vh] md:min-h-[85vh] gap-5 p-5">
+
+        {/* Left — heading + intro text */}
+        <div
+          className="w-full md:w-1/2 flex flex-col justify-center px-10 md:px-16 lg:px-24 py-16 md:py-0 mb-5"
+          style={{ backgroundColor: "#EDEFF2" }}
+        >
+          <h2
+                className="
+                  self-start mb-6 sm:mb-8 md:mb-10
+                  text-[1.6rem] sm:text-[2rem] md:text-[2.4rem] lg:text-[2.8rem] xl:text-[3rem]
+                  font-extrabold leading-tight tracking-tight
+                "
+                style={{
+                  fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+                  color: "#1B286B",
+                }}
+              >
+            OUR CLIENTS
+          </h2>
+          <p
+            style={{
+              fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+              fontWeight: 400,
+              fontSize: "clamp(0.85rem, 1.3vw, 1rem)",
+              color: "#1B286B",
+              lineHeight: 1.8,
+            }}
+          >
+            {/* TODO: add client intro text if needed */}
+            We are proud to work with a diverse range of organisations that share our commitment to meaningful, lasting transformation.
+          </p>
+        </div>
+
+        {/* Right — stock image */}
+        <div className="w-full md:w-1/2 overflow-hidden md:block hidden mb-5">
+          {/* TODO image needed — place stock image at ${prefix}/stock_clients.webp */}
+          <img
+            src={`${prefix}/stock_contact.webp`}
+            alt="Our clients"
+            className="w-full h-full object-cover"
+            style={{ minHeight: "320px" }}
+          />
+        </div>
+      </div>
+
+      {/* Bottom: logo grid */}
+      <div
+        className="
+          px-8 sm:px-12 md:px-20 lg:px-28 xl:px-36
+          py-12 sm:py-16
+        "
+      >
+        <div className="grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-x-10 gap-y-10 sm:gap-x-14 sm:gap-y-12 md:gap-x-16 md:gap-y-14">
+          {logos.map((logo) => (
+            <div
+              key={logo.alt}
+              className="flex items-center justify-center p-2"
+            >
+              <img
+                src={logo.src}
+                alt={logo.alt}
+                className="w-full max-w-[120px] sm:max-w-[140px] md:max-w-[160px] h-auto object-contain"
+                style={{ filter: "grayscale(100%)", opacity: 0.85 }}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
     </div>
   );
 };
@@ -379,6 +476,15 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
           return (
             <div key={index} ref={(el) => { containerRefs.current[index] = el; }}>
               <WhoWeArePanel id={panel.id} />
+            </div>
+          );
+        }
+
+        // ── Clients ─────────────────────────────────────────────────────────
+        if (panel.type === "clients") {
+          return (
+            <div key={index} ref={(el) => { containerRefs.current[index] = el; }}>
+              <ClientsPanel id={panel.id} />
             </div>
           );
         }
