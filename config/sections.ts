@@ -8,6 +8,7 @@ export const SECTION_IDS = [
   "ecosystems-thinking",
   "why-we-started",
   "who-we-are",
+  "what-we-offer",
   "contact",
 ] as const;
 
