@@ -13,7 +13,7 @@ const SEQUENCES = {
   },
   outro: {
     id: "what-we-offer",
-    totalFrames: 135,
+    totalFrames: 129,
     directory: `${prefix}/sequences/outro`,
   },
 };
@@ -359,7 +359,7 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
     }
     if (outroLayout && !shouldShow) {
       const top = outroLayout.top - scrollYRef.current;
-      if (top <= 50 && top > -150) shouldShow = true;
+      if (top <= 500 && top > -150) shouldShow = true;
     }
     setShowScrollIndicator(shouldShow);
   }, []);
@@ -446,7 +446,7 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
           >
             {isMobileVariant && panel.mobileSrc ? (
               <picture>
-                <source media="(min-width: 768px)" srcSet={panel.src} />
+                <source media="(min-width: 500px)" srcSet={panel.src} />
                 <img src={panel.mobileSrc} alt="Panel" className="block w-full h-auto object-cover md:absolute md:inset-0 md:h-full" />
               </picture>
             ) : (
