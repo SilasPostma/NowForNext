@@ -8,6 +8,7 @@ export const SECTION_IDS = [
   "ecosystems-thinking",
   "why-we-started",
   "who-we-are",
+  "contact",
 ] as const;
 
 export type SectionId = typeof SECTION_IDS[number];

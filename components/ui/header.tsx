@@ -10,32 +10,6 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ activeId }) => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [copied, setCopied] = useState(false);
-
-  const email = "test@gmail.com";
-  const subject = "Inquiry from NowForNext website";
-  const bodyText = `Hello,
-
-I am interested in your services and would like to learn more.
-
-Best regards,
-
-[Your Name]
-[Organization]
-[Phone Number]
-[Email Address]`;
-
-  const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
-
-  const handleMailClick = async () => {
-    try {
-      await navigator.clipboard.writeText(email);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1000);
-    } catch (err) {
-      console.error("Could not copy email address:", err);
-    }
-  };
 
   const letters: { letter: string; href: string; id: SectionId }[] = [
     { letter: "A", href: `#${SECTION_IDS[1]}`, id: SECTION_IDS[1] },
@@ -49,7 +23,7 @@ Best regards,
   const navLinks: { text: string; href: string; id?: SectionId }[] = [
     { text: "WHY WE STARTED", href: `#${SECTION_IDS[7]}`, id: SECTION_IDS[7] },
     { text: "WHO WE ARE", href: `#${SECTION_IDS[8]}`, id: SECTION_IDS[8] },
-    { text: "CONTACT", href: mailtoLink },
+    { text: "CONTACT", href: `#${SECTION_IDS[9]}`, id: SECTION_IDS[9] },
   ];
 
   return (
@@ -98,9 +72,7 @@ Best regards,
             <a
               key={item.text}
               href={item.href}
-              onClick={item.text === "CONTACT" ? handleMailClick : undefined}
-              target={item.text === "CONTACT" ? "_blank" : undefined}
-              rel={item.text === "CONTACT" ? "noopener noreferrer" : undefined}
+              onClick={() => setMenuOpen(false)}
               className={`font-bold text-m xl:text-lg tracking-widest transition-colors duration-200 whitespace-nowrap
               ${
                 activeId === item.id
@@ -108,7 +80,7 @@ Best regards,
                   : "text-[#9EA9BA] hover:text-[#2D3E61]"
               }`}
             >
-              {item.text === "CONTACT" && copied ? "EMAIL COPIED" : item.text}
+              {item.text}
             </a>
           ))}
         </nav>
@@ -116,7 +88,7 @@ Best regards,
         <button
           type="button"
           onClick={() => setMenuOpen((prev) => !prev)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#FEFEFE]  transition hover:text-[#2D3E61] text-[#8A9AB0] lg:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#FEFEFE] transition hover:text-[#2D3E61] text-[#8A9AB0] lg:hidden"
           aria-expanded={menuOpen}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
         >
@@ -178,30 +150,21 @@ Best regards,
               <a
                 key={item.text}
                 href={item.href}
-                onClick={
-                  item.text === "CONTACT"
-                    ? () => handleMailClick()
-                    : () => setMenuOpen(false)
-                }
-                target={item.text === "CONTACT" ? "_blank" : undefined}
-                rel={
-                  item.text === "CONTACT" ? "noopener noreferrer" : undefined
-                }
-                className={`pl-1 py-3 text-center font-bold tracking-widest text-sm xl:text-base transition-colors duration-200 
+                onClick={() => setMenuOpen(false)}
+                className={`pl-1 py-3 text-center font-bold tracking-widest text-sm xl:text-base transition-colors duration-200
                   ${
                     activeId === item.id
                       ? "text-[#1B286B]"
                       : "text-[#9EA9BA] hover:text-[#1B286B]"
-                  }
-                  `}
+                  }`}
               >
-                {item.text === "CONTACT" && copied ? "EMAIL COPIED" : item.text}
+                {item.text}
               </a>
             ))}
           </div>
         </div>
       </div>
-      <div className="absolute inset-x-[5%] bottom-0 h-[4px] bg-gray-200 " />
+      <div className="absolute inset-x-[5%] bottom-0 h-[4px] bg-gray-200" />
     </header>
   );
 };
