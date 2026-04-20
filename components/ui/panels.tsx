@@ -424,9 +424,29 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
               key={index}
               id={panel.id}
               ref={(el) => { containerRefs.current[index] = el; }}
-              className="relative w-full bg-[#FEFEFE] flex items-center justify-center py-20 aspect-[35/18]"
+              className="
+                relative w-full bg-[#FEFEFE]
+                flex flex-col items-center justify-center
+                px-8 sm:px-12 md:px-20 lg:px-28 xl:px-36
+                pt-14 sm:pt-16 md:pt-20
+                pb-12 sm:pb-14 md:pb-16
+                aspect-[35/18]
+              "
             >
-              <div className="w-[80%] lg:w-[60%] max-w-[1200px] aspect-video">
+              <h2
+                className="
+                  self-start mb-6 sm:mb-8 md:mb-10
+                  text-[1.6rem] sm:text-[2rem] md:text-[2.4rem] lg:text-[2.8rem] xl:text-[3rem]
+                  font-extrabold leading-tight tracking-tight
+                "
+                style={{
+                  fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+                  color: "#1B286B",
+                }}
+              >
+                WHY WE STARTED
+              </h2>
+              <div className="w-full max-w-[1200px] aspect-video">
                 <iframe className="w-full h-full" src={panel.src} title="Vimeo video" allowFullScreen />
               </div>
             </div>
