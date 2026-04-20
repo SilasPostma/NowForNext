@@ -8,7 +8,7 @@ const prefix = process.env.NODE_ENV === "production" ? "/NowForNext" : "";
 const SEQUENCES = {
   intro: {
     id: "landing-page",
-    totalFrames: 71,
+    totalFrames: 125,
     directory: `${prefix}/sequences/intro`,
   },
   outro: {
