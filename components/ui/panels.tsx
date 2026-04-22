@@ -122,7 +122,7 @@ const ContactPanel = ({ id }: { id: SectionId }) => {
       {/* Left — image */}
       <div className="w-full md:w-1/2 overflow-hidden md:block hidden mb-5">
         <img
-          src={`${prefix}/stock_contact.webp`}
+          src={`${prefix}/tafel.webp`}
           alt="Contact"
           className="w-full h-full object-cover"
           style={{ minHeight: "320px" }}
@@ -152,7 +152,6 @@ const ContactPanel = ({ id }: { id: SectionId }) => {
           {[
             {
               name: "Anne Kloosterboer",
-              phone: "+31 6 537 86996",
               email: "anne.kloosterboer@nowfornext.org",
             },
           ].map((person) => (
@@ -166,7 +165,7 @@ const ContactPanel = ({ id }: { id: SectionId }) => {
                   marginBottom: "4px",
                 }}
               >
-                {person.name} / {person.phone}
+                {person.name}:
               </p>
               <a
                 href={`mailto:${person.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`}
@@ -251,6 +250,18 @@ const ContactPanel = ({ id }: { id: SectionId }) => {
               </span>
             </a>
           </p>
+          <p
+            style={{
+              fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+              fontWeight: 600,
+              fontSize: "clamp(0.85rem, 1.3vw, 1rem)",
+              color: "#1B286B",
+              lineHeight: 1.8,
+            }}
+            >
+              <br />
+              Looking forward to connect!
+          </p>
         </div>
       </div>
     </div>
@@ -260,18 +271,18 @@ const ContactPanel = ({ id }: { id: SectionId }) => {
 // ─── Clients Panel ────────────────────────────────────────────────────────────
 const ClientsPanel = ({ id }: { id: SectionId }) => {
   const logos = [
-    { src: `${prefix}/logos/swapfiets_logo.webp`, alt: "swapfiets_logo" },
-    { src: `${prefix}/logos/campina_logo.webp`, alt: "campina_logo" },
-    { src: `${prefix}/logos/vinci_logo.webp`, alt: "vinci_logo" },
-    { src: `${prefix}/logos/jumbo_logo.webp`, alt: "jumbo_logo" },
-    { src: `${prefix}/logos/pon_logo.webp`, alt: "pon_logo" },
     { src: `${prefix}/logos/kiwa_logo.webp`, alt: "kiwa_logo" },
-    { src: `${prefix}/logos/shv_logo.webp`, alt: "shv_logo" },
-    { src: `${prefix}/logos/tpvision_logo.webp`, alt: "tpvision_logo" },
     { src: `${prefix}/logos/vanoord_logo.webp`, alt: "vanoord_logo" },
+    { src: `${prefix}/logos/pon_logo.webp`, alt: "pon_logo" },
     { src: `${prefix}/logos/dsm_logo.webp`, alt: "dsm_logo" },
+    { src: `${prefix}/logos/stoltnielsen_logo.webp`, alt: "stoltnielsen_logo" },
+    { src: `${prefix}/logos/tpvision_logo.webp`, alt: "tpvision_logo" },
+    { src: `${prefix}/logos/swapfiets_logo.webp`, alt: "swapfiets_logo" },
+    { src: `${prefix}/logos/shv_logo.webp`, alt: "shv_logo" },
+    { src: `${prefix}/logos/vinci_logo.webp`, alt: "vinci_logo" },
+    { src: `${prefix}/logos/campina_logo.webp`, alt: "campina_logo" },
+    { src: `${prefix}/logos/jumbo_logo.webp`, alt: "jumbo_logo" },
     { src: `${prefix}/logos/johnson_logo.webp`, alt: "johnson_logo" },
-    { src: `${prefix}/logos/basf_logo.webp`, alt: "basf_logo" },
   ];
 
   return (
@@ -306,16 +317,14 @@ const ClientsPanel = ({ id }: { id: SectionId }) => {
               lineHeight: 1.8,
             }}
           >
-            {/* TODO: add client intro text if needed */}
-            We are proud to work with a diverse range of organisations that share our commitment to meaningful, lasting transformation.
+            We are proud to work with a diverse range of organisations that share our commitment to meaningful, lasting business transformation.
           </p>
         </div>
 
-        {/* Right — stock image */}
+        {/* Right */}
         <div className="w-full md:w-1/2 overflow-hidden md:block hidden mb-5">
-          {/* TODO image needed — place stock image at ${prefix}/stock_clients.webp */}
           <img
-            src={`${prefix}/stock_contact.webp`}
+            src={`${prefix}/rups.webp`}
             alt="Our clients"
             className="w-full h-full object-cover"
             style={{ minHeight: "320px" }}
