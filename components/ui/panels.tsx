@@ -81,7 +81,7 @@ const PANELS_DATA: PanelData[] = [
   },
   {
     type: "video",
-    src: "https://player.vimeo.com/video/655102517?title=0&byline=0&portrait=0",
+    src: "https://player.vimeo.com/video/1186999497?title=0&byline=0&portrait=0",
     id: SECTION_IDS[7],
   },
   { type: "who-we-are", id: SECTION_IDS[8] },
