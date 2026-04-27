@@ -2,8 +2,6 @@
 import { useState } from "react";
 import { SECTION_IDS, SectionId } from "@/config/sections";
 
-const prefix = process.env.NODE_ENV === "production" ? "/NowForNext" : "";
-
 interface HeaderProps {
   activeId: string;
 }
@@ -39,14 +37,14 @@ const Header: React.FC<HeaderProps> = ({ activeId }) => {
           onClick={() => setMenuOpen(false)}
         >
           <img
-            src={`${prefix}/nfn_logo.webp`}
+            src={`/nfn_logo.webp`}
             alt="NowForNext"
             className={`absolute inset-0 w-full h-auto transition-opacity duration-300 ease-in-out pt-1 ${
               activeId === "landing-page" ? "opacity-0" : "opacity-100"
             }`}
           />
           <img
-            src={`${prefix}/nfn_logo_reverse.webp`}
+            src={`/nfn_logo_reverse.webp`}
             alt="NowForNext"
             className={`absolute inset-0 w-full h-auto transition-opacity duration-300 ease-in-out pt-1 ${
               activeId === "landing-page" ? "opacity-100" : "opacity-0"
