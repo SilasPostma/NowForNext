@@ -18,23 +18,72 @@ const SEQUENCES = {
   },
 };
 
-type ImagePanel    = { type: "image";      src: string; mobileSrc?: string; id: SectionId; };
-type VideoPanel    = { type: "video";      src: string; id: SectionId; };
-type SequencePanel = { type: "sequence";   sequenceKey: "intro" | "outro"; id: SectionId; };
-type ContactPanel  = { type: "contact";    id: SectionId; };
-type WhoWeArePanel = { type: "who-we-are"; id: SectionId; };
-type ClientsPanel  = { type: "clients";    id: SectionId; };
-type PanelData = ImagePanel | VideoPanel | SequencePanel | ContactPanel | WhoWeArePanel | ClientsPanel;
+type ImagePanel = {
+  type: "image";
+  src: string;
+  mobileSrc?: string;
+  id: SectionId;
+};
+type VideoPanel = { type: "video"; src: string; id: SectionId };
+type SequencePanel = {
+  type: "sequence";
+  sequenceKey: "intro" | "outro";
+  id: SectionId;
+};
+type ContactPanel = { type: "contact"; id: SectionId };
+type WhoWeArePanel = { type: "who-we-are"; id: SectionId };
+type ClientsPanel = { type: "clients"; id: SectionId };
+type PanelData =
+  | ImagePanel
+  | VideoPanel
+  | SequencePanel
+  | ContactPanel
+  | WhoWeArePanel
+  | ClientsPanel;
 
 const PANELS_DATA: PanelData[] = [
   { type: "sequence", sequenceKey: "intro", id: SECTION_IDS[0] },
-  { type: "image", src: `${prefix}/a-block.webp`, mobileSrc: `${prefix}/a-block-mobile.webp`, id: SECTION_IDS[1] },
-  { type: "image", src: `${prefix}/b-block.webp`, mobileSrc: `${prefix}/b-block-mobile.webp`, id: SECTION_IDS[2] },
-  { type: "image", src: `${prefix}/c-block.webp`, mobileSrc: `${prefix}/c-block-mobile.webp`, id: SECTION_IDS[3] },
-  { type: "image", src: `${prefix}/d-block.webp`, mobileSrc: `${prefix}/d-block-mobile.webp`, id: SECTION_IDS[4] },
-  { type: "image", src: `${prefix}/e-block.webp`, mobileSrc: `${prefix}/e-block-mobile.webp`, id: SECTION_IDS[5] },
-  { type: "image", src: `${prefix}/f-block.webp`, mobileSrc: `${prefix}/f-block-mobile.webp`, id: SECTION_IDS[6] },
-  { type: "video", src: "https://player.vimeo.com/video/655102517?title=0&byline=0&portrait=0", id: SECTION_IDS[7] },
+  {
+    type: "image",
+    src: `${prefix}/a-block.webp`,
+    mobileSrc: `${prefix}/a-block-mobile.webp`,
+    id: SECTION_IDS[1],
+  },
+  {
+    type: "image",
+    src: `${prefix}/b-block.webp`,
+    mobileSrc: `${prefix}/b-block-mobile.webp`,
+    id: SECTION_IDS[2],
+  },
+  {
+    type: "image",
+    src: `${prefix}/c-block.webp`,
+    mobileSrc: `${prefix}/c-block-mobile.webp`,
+    id: SECTION_IDS[3],
+  },
+  {
+    type: "image",
+    src: `${prefix}/d-block.webp`,
+    mobileSrc: `${prefix}/d-block-mobile.webp`,
+    id: SECTION_IDS[4],
+  },
+  {
+    type: "image",
+    src: `${prefix}/e-block.webp`,
+    mobileSrc: `${prefix}/e-block-mobile.webp`,
+    id: SECTION_IDS[5],
+  },
+  {
+    type: "image",
+    src: `${prefix}/f-block.webp`,
+    mobileSrc: `${prefix}/f-block-mobile.webp`,
+    id: SECTION_IDS[6],
+  },
+  {
+    type: "video",
+    src: "https://player.vimeo.com/video/655102517?title=0&byline=0&portrait=0",
+    id: SECTION_IDS[7],
+  },
   { type: "who-we-are", id: SECTION_IDS[8] },
   { type: "sequence", sequenceKey: "outro", id: SECTION_IDS[9] },
   { type: "clients", id: SECTION_IDS[10] },
@@ -111,7 +160,7 @@ const WhoWeArePanel = ({ id }: { id: SectionId }) => {
 
 // ─── Contact Panel Component ───────────────────────────────────────────────────
 const ContactPanel = ({ id }: { id: SectionId }) => {
-  const subject  = "NowForNext";
+  const subject = "NowForNext";
   const bodyText = "Name:\n\nEmail:\n\nHow could we help:";
 
   return (
@@ -135,74 +184,18 @@ const ContactPanel = ({ id }: { id: SectionId }) => {
         style={{ backgroundColor: "#EDEFF2" }}
       >
         <h2
-                className="
+          className="
                   self-start mb-6 sm:mb-8 md:mb-10
                   text-[1.6rem] sm:text-[2rem] md:text-[2.4rem] lg:text-[2.8rem] xl:text-[3rem]
                   font-extrabold leading-tight tracking-tight
                 "
-                style={{
-                  fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-                  color: "#1B286B",
-                }}
-              >
+          style={{
+            fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+            color: "#1B286B",
+          }}
+        >
           CONTACT
         </h2>
-
-        <div className="flex flex-col gap-8 mb-10">
-          {[
-            {
-              name: "Anne Kloosterboer",
-              email: "anne.kloosterboer@nowfornext.org",
-            },
-          ].map((person) => (
-            <div key={person.name}>
-              <p
-                style={{
-                  fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-                  fontWeight: 500,
-                  fontSize: "clamp(0.9rem, 1.4vw, 1.05rem)",
-                  color: "#1B286B",
-                  marginBottom: "4px",
-                }}
-              >
-                {person.name}:
-              </p>
-              <a
-                href={`mailto:${person.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`}
-                style={{
-                  fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-                  fontWeight: 400,
-                  fontSize: "clamp(0.85rem, 1.3vw, 1rem)",
-                  color: "#9EA9BA",
-                  textDecoration: "none",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "4px",
-                  userSelect: "text",
-                  transition: "color 0.2s",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.color = "#1B286B";
-                  const arrow = e.currentTarget.querySelector<HTMLSpanElement>(".email-arrow");
-                  if (arrow) { arrow.style.opacity = "1"; arrow.style.transform = "translateX(3px)"; }
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.color = "#9EA9BA";
-                  const arrow = e.currentTarget.querySelector<HTMLSpanElement>(".email-arrow");
-                  if (arrow) { arrow.style.opacity = "0"; arrow.style.transform = "translateX(0)"; }
-                }}
-              >
-                {person.email}
-                <span
-                  className="email-arrow"
-                  style={{ opacity: 0, transform: "translateX(0)", transition: "opacity 0.2s, transform 0.2s", fontSize: "0.9em", lineHeight: 1 }}
-                >
-                  →
-                </span>
-              </a>
-            </div>
-          ))}
-        </div>
 
         <div className="mb-10">
           <p
@@ -216,6 +209,7 @@ const ContactPanel = ({ id }: { id: SectionId }) => {
           >
             For more information:
             <br />
+            {/* First Email Link */}
             <a
               href={`mailto:info@nowfornext.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`}
               style={{
@@ -232,24 +226,96 @@ const ContactPanel = ({ id }: { id: SectionId }) => {
               }}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLAnchorElement).style.color = "#1B286B";
-                const arrow = e.currentTarget.querySelector<HTMLSpanElement>(".email-arrow");
-                if (arrow) { arrow.style.opacity = "1"; arrow.style.transform = "translateX(3px)"; }
+                const arrow =
+                  e.currentTarget.querySelector<HTMLSpanElement>(
+                    ".email-arrow",
+                  );
+                if (arrow) {
+                  arrow.style.opacity = "1";
+                  arrow.style.transform = "translateX(3px)";
+                }
               }}
               onMouseLeave={(e) => {
                 (e.currentTarget as HTMLAnchorElement).style.color = "#9EA9BA";
-                const arrow = e.currentTarget.querySelector<HTMLSpanElement>(".email-arrow");
-                if (arrow) { arrow.style.opacity = "0"; arrow.style.transform = "translateX(0)"; }
+                const arrow =
+                  e.currentTarget.querySelector<HTMLSpanElement>(
+                    ".email-arrow",
+                  );
+                if (arrow) {
+                  arrow.style.opacity = "0";
+                  arrow.style.transform = "translateX(0)";
+                }
               }}
             >
               info@nowfornext.org
               <span
                 className="email-arrow"
-                style={{ opacity: 0, transform: "translateX(0)", transition: "opacity 0.2s, transform 0.2s", fontSize: "0.9em", lineHeight: 1 }}
+                style={{
+                  opacity: 0,
+                  transform: "translateX(0)",
+                  transition: "opacity 0.2s, transform 0.2s",
+                  fontSize: "0.9em",
+                  lineHeight: 1,
+                }}
+              >
+                →
+              </span>
+            </a>
+            <br />
+            {/* Second Email Link */}
+            <a
+              href={`mailto:anne.kloosterboer@nowfornext.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`}
+              style={{
+                fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+                fontWeight: 400,
+                fontSize: "clamp(0.85rem, 1.3vw, 1rem)",
+                color: "#9EA9BA",
+                textDecoration: "none",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "4px",
+                userSelect: "text",
+                transition: "color 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLAnchorElement).style.color = "#1B286B";
+                const arrow =
+                  e.currentTarget.querySelector<HTMLSpanElement>(
+                    ".email-arrow",
+                  );
+                if (arrow) {
+                  arrow.style.opacity = "1";
+                  arrow.style.transform = "translateX(3px)";
+                }
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLAnchorElement).style.color = "#9EA9BA";
+                const arrow =
+                  e.currentTarget.querySelector<HTMLSpanElement>(
+                    ".email-arrow",
+                  );
+                if (arrow) {
+                  arrow.style.opacity = "0";
+                  arrow.style.transform = "translateX(0)";
+                }
+              }}
+            >
+              anne.kloosterboer@nowfornext.org
+              <span
+                className="email-arrow"
+                style={{
+                  opacity: 0,
+                  transform: "translateX(0)",
+                  transition: "opacity 0.2s, transform 0.2s",
+                  fontSize: "0.9em",
+                  lineHeight: 1,
+                }}
               >
                 →
               </span>
             </a>
           </p>
+
           <p
             style={{
               fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
@@ -258,9 +324,9 @@ const ContactPanel = ({ id }: { id: SectionId }) => {
               color: "#1B286B",
               lineHeight: 1.8,
             }}
-            >
-              <br />
-              Looking forward to connect!
+          >
+            <br />
+            Looking forward to connect!
           </p>
         </div>
       </div>
@@ -287,25 +353,23 @@ const ClientsPanel = ({ id }: { id: SectionId }) => {
 
   return (
     <div id={id} className="relative w-full bg-[#FEFEFE]">
-
       <div className="flex flex-col md:flex-row min-h-[30vh] md:min-h-[85vh] gap-5 p-5">
-
         {/* Left — heading + intro text */}
         <div
           className="w-full md:w-1/2 flex flex-col justify-center px-10 md:px-16 lg:px-24 py-16 md:py-0 mb-5"
           style={{ backgroundColor: "#EDEFF2" }}
         >
           <h2
-                className="
+            className="
                   self-start mb-6 sm:mb-8 md:mb-10
                   text-[1.6rem] sm:text-[2rem] md:text-[2.4rem] lg:text-[2.8rem] xl:text-[3rem]
                   font-extrabold leading-tight tracking-tight
                 "
-                style={{
-                  fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-                  color: "#1B286B",
-                }}
-              >
+            style={{
+              fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+              color: "#1B286B",
+            }}
+          >
             OUR CLIENTS
           </h2>
           <p
@@ -317,7 +381,8 @@ const ClientsPanel = ({ id }: { id: SectionId }) => {
               lineHeight: 1.8,
             }}
           >
-            We are proud to work with a diverse range of organisations that share our commitment to meaningful, lasting business transformation.
+            We are proud to work with a diverse range of organisations that
+            share our commitment to meaningful, lasting business transformation.
           </p>
         </div>
 
@@ -355,19 +420,21 @@ const ClientsPanel = ({ id }: { id: SectionId }) => {
           ))}
         </div>
       </div>
-
     </div>
   );
 };
 
 // ─── Main PanelGrid ────────────────────────────────────────────────────────────
 const PanelGrid = ({ activeId }: { activeId: string }) => {
-  const containerRefs  = useRef<(HTMLDivElement | null)[]>([]);
-  const canvasRefs     = useRef<(HTMLCanvasElement | null)[]>([]);
-  const frameRefs      = useRef<number[]>([]);
-  const imagesRef      = useRef<{ [key: string]: HTMLImageElement[] }>({ intro: [], outro: [] });
+  const containerRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const canvasRefs = useRef<(HTMLCanvasElement | null)[]>([]);
+  const frameRefs = useRef<number[]>([]);
+  const imagesRef = useRef<{ [key: string]: HTMLImageElement[] }>({
+    intro: [],
+    outro: [],
+  });
   const layoutCacheRef = useRef<{ top: number; height: number }[]>([]);
-  const scrollYRef     = useRef(0);
+  const scrollYRef = useRef(0);
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
 
   // 1. Preload images
@@ -392,17 +459,17 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
         return { top: rect.top + window.scrollY, height: rect.height };
       });
     };
-    
+
     // Utilize ResizeObserver to correctly update layout when images load on mobile
     const observer = new ResizeObserver(updateLayoutCache);
     observer.observe(document.body);
 
     const timer = setTimeout(updateLayoutCache, 50);
     window.addEventListener("resize", updateLayoutCache);
-    
-    return () => { 
-      clearTimeout(timer); 
-      window.removeEventListener("resize", updateLayoutCache); 
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", updateLayoutCache);
       observer.disconnect();
     };
   }, []);
@@ -415,32 +482,54 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
       PANELS_DATA.forEach((panel, index) => {
         if (panel.type !== "sequence") return;
 
-        const canvas      = canvasRefs.current[index];
-        const context     = canvas?.getContext("2d");
-        const sequence    = imagesRef.current[panel.sequenceKey as "intro" | "outro"];
-        const config      = SEQUENCES[panel.sequenceKey as "intro" | "outro"];
+        const canvas = canvasRefs.current[index];
+        const context = canvas?.getContext("2d");
+        const sequence =
+          imagesRef.current[panel.sequenceKey as "intro" | "outro"];
+        const config = SEQUENCES[panel.sequenceKey as "intro" | "outro"];
         const layoutCache = layoutCacheRef.current[index];
 
         if (layoutCache && canvas && context && sequence.length > 0) {
-          const rectTop          = layoutCache.top - scrollYRef.current;
+          const rectTop = layoutCache.top - scrollYRef.current;
           const scrollableHeight = layoutCache.height - window.innerHeight;
-          const progress         = Math.max(0, Math.min(1, -rectTop / scrollableHeight));
-          const targetFrameIndex = Math.max(1, Math.min(config.totalFrames, Math.ceil(progress * config.totalFrames)));
+          const progress = Math.max(
+            0,
+            Math.min(1, -rectTop / scrollableHeight),
+          );
+          const targetFrameIndex = Math.max(
+            1,
+            Math.min(
+              config.totalFrames,
+              Math.ceil(progress * config.totalFrames),
+            ),
+          );
 
-          if (frameRefs.current[index] === undefined) frameRefs.current[index] = 1;
-          frameRefs.current[index] += (targetFrameIndex - frameRefs.current[index]) * 0.12;
+          if (frameRefs.current[index] === undefined)
+            frameRefs.current[index] = 1;
+          frameRefs.current[index] +=
+            (targetFrameIndex - frameRefs.current[index]) * 0.12;
 
           const currentFrame = Math.round(frameRefs.current[index]);
           const img = sequence[currentFrame];
 
           if (img && img.complete) {
             context.clearRect(0, 0, canvas.width, canvas.height);
-            const hRatio = canvas.width  / img.width;
+            const hRatio = canvas.width / img.width;
             const vRatio = canvas.height / img.height;
-            const ratio  = Math.min(hRatio, vRatio);
-            const x = (canvas.width  - img.width  * ratio) / 2;
+            const ratio = Math.min(hRatio, vRatio);
+            const x = (canvas.width - img.width * ratio) / 2;
             const y = (canvas.height - img.height * ratio) / 2;
-            context.drawImage(img, 0, 0, img.width, img.height, x, y, img.width * ratio, img.height * ratio);
+            context.drawImage(
+              img,
+              0,
+              0,
+              img.width,
+              img.height,
+              x,
+              y,
+              img.width * ratio,
+              img.height * ratio,
+            );
           }
         }
       });
@@ -479,11 +568,15 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
   return (
     <main className="w-full">
       {PANELS_DATA.map((panel, index) => {
-
         // ── Who We Are ──────────────────────────────────────────────────────
         if (panel.type === "who-we-are") {
           return (
-            <div key={index} ref={(el) => { containerRefs.current[index] = el; }}>
+            <div
+              key={index}
+              ref={(el) => {
+                containerRefs.current[index] = el;
+              }}
+            >
               <WhoWeArePanel id={panel.id} />
             </div>
           );
@@ -492,7 +585,12 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
         // ── Clients ─────────────────────────────────────────────────────────
         if (panel.type === "clients") {
           return (
-            <div key={index} ref={(el) => { containerRefs.current[index] = el; }}>
+            <div
+              key={index}
+              ref={(el) => {
+                containerRefs.current[index] = el;
+              }}
+            >
               <ClientsPanel id={panel.id} />
             </div>
           );
@@ -501,7 +599,12 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
         // ── Contact ─────────────────────────────────────────────────────────
         if (panel.type === "contact") {
           return (
-            <div key={index} ref={(el) => { containerRefs.current[index] = el; }}>
+            <div
+              key={index}
+              ref={(el) => {
+                containerRefs.current[index] = el;
+              }}
+            >
               <ContactPanel id={panel.id} />
             </div>
           );
@@ -513,17 +616,23 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
             <div
               key={index}
               id={panel.id}
-              ref={(el) => { containerRefs.current[index] = el; }}
+              ref={(el) => {
+                containerRefs.current[index] = el;
+              }}
               className="w-full"
             >
               <div className="relative h-[400vh] bg-[#FEFEFE]">
                 <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
                   <canvas
-                    ref={(el) => { canvasRefs.current[index] = el; }}
+                    ref={(el) => {
+                      canvasRefs.current[index] = el;
+                    }}
                     width={1920}
                     height={1080}
                     className={`w-[90%] lg:w-[80%] h-full object-contain ${
-                      panel.sequenceKey === "outro" ? "md:scale-[0.8] scale-[1.2]" : ""
+                      panel.sequenceKey === "outro"
+                        ? "md:scale-[0.8] scale-[1.2]"
+                        : ""
                     }`}
                   />
                 </div>
@@ -538,7 +647,9 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
             <div
               key={index}
               id={panel.id}
-              ref={(el) => { containerRefs.current[index] = el; }}
+              ref={(el) => {
+                containerRefs.current[index] = el;
+              }}
               className="
                 relative w-full bg-[#FEFEFE]
                 flex flex-col items-center justify-center
@@ -562,7 +673,12 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
                 WHY WE STARTED
               </h2>
               <div className="w-full max-w-[1200px] aspect-video">
-                <iframe className="w-full h-full" src={panel.src} title="Vimeo video" allowFullScreen />
+                <iframe
+                  className="w-full h-full"
+                  src={panel.src}
+                  title="Vimeo video"
+                  allowFullScreen
+                />
               </div>
             </div>
           );
@@ -570,22 +686,34 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
 
         // ── Image ───────────────────────────────────────────────────────────
         const isMobileVariant = panel.type === "image" && "mobileSrc" in panel;
-        const mobileClasses   = isMobileVariant ? "md:aspect-[35/18]" : "aspect-[35/18]";
+        const mobileClasses = isMobileVariant
+          ? "md:aspect-[35/18]"
+          : "aspect-[35/18]";
 
         return (
           <div
             key={index}
             id={panel.id}
-            ref={(el) => { containerRefs.current[index] = el; }}
+            ref={(el) => {
+              containerRefs.current[index] = el;
+            }}
             className={`relative w-full bg-gray-200 overflow-hidden ${mobileClasses}`}
           >
             {isMobileVariant && panel.mobileSrc ? (
               <picture>
                 <source media="(min-width: 500px)" srcSet={panel.src} />
-                <img src={panel.mobileSrc} alt="Panel" className="block w-full h-auto object-cover md:absolute md:inset-0 md:h-full" />
+                <img
+                  src={panel.mobileSrc}
+                  alt="Panel"
+                  className="block w-full h-auto object-cover md:absolute md:inset-0 md:h-full"
+                />
               </picture>
             ) : (
-              <img src={panel.src} alt="Panel" className="absolute inset-0 w-full h-full object-cover" />
+              <img
+                src={panel.src}
+                alt="Panel"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
             )}
           </div>
         );
@@ -594,8 +722,16 @@ const PanelGrid = ({ activeId }: { activeId: string }) => {
       {showScrollIndicator && (
         <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 animate-bounce text-[#9EA9BA] flex flex-col items-center">
           <span className="text-sm font-medium mb-2">Scroll to explore</span>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M7 13l5 5 5-5" /><line x1="12" y1="2" x2="12" y2="18" />
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <path d="M7 13l5 5 5-5" />
+            <line x1="12" y1="2" x2="12" y2="18" />
           </svg>
         </div>
       )}
