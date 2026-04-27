@@ -51,32 +51,32 @@ const PANELS_DATA: PanelData[] = [
   },
   {
     type: "image",
-    src: `$/desktop/b-block.webp`,
-    mobileSrc: `$/mobile/b-block-mobile.webp`,
+    src: `/desktop/b-block.webp`,
+    mobileSrc: `/mobile/b-block-mobile.webp`,
     id: SECTION_IDS[2],
   },
   {
     type: "image",
-    src: `$/desktop/c-block.webp`,
-    mobileSrc: `$/mobile/c-block-mobile.webp`,
+    src: `/desktop/c-block.webp`,
+    mobileSrc: `/mobile/c-block-mobile.webp`,
     id: SECTION_IDS[3],
   },
   {
     type: "image",
-    src: `$/desktop/d-block.webp`,
-    mobileSrc: `$/mobile/d-block-mobile.webp`,
+    src: `/desktop/d-block.webp`,
+    mobileSrc: `/mobile/d-block-mobile.webp`,
     id: SECTION_IDS[4],
   },
   {
     type: "image",
-    src: `$/desktop/e-block.webp`,
-    mobileSrc: `$/mobile/e-block-mobile.webp`,
+    src: `/desktop/e-block.webp`,
+    mobileSrc: `/mobile/e-block-mobile.webp`,
     id: SECTION_IDS[5],
   },
   {
     type: "image",
-    src: `$/desktop/f-block.webp`,
-    mobileSrc: `$/mobile/f-block-mobile.webp`,
+    src: `/desktop/f-block.webp`,
+    mobileSrc: `/mobile/f-block-mobile.webp`,
     id: SECTION_IDS[6],
   },
   {
@@ -171,7 +171,7 @@ const ContactPanel = ({ id }: { id: SectionId }) => {
       {/* Left — image */}
       <div className="w-full md:w-1/2 overflow-hidden md:block hidden mb-5">
         <img
-          src={`$/tafel.webp`}
+          src={`/tafel.webp`}
           alt="Contact"
           className="w-full h-full object-cover"
           style={{ minHeight: "320px" }}
@@ -337,18 +337,18 @@ const ContactPanel = ({ id }: { id: SectionId }) => {
 // ─── Clients Panel ────────────────────────────────────────────────────────────
 const ClientsPanel = ({ id }: { id: SectionId }) => {
   const logos = [
-    { src: `$/logos/kiwa_logo.webp`, alt: "kiwa_logo" },
-    { src: `$/logos/vanoord_logo.webp`, alt: "vanoord_logo" },
-    { src: `$/logos/pon_logo.webp`, alt: "pon_logo" },
-    { src: `$/logos/dsm_logo.webp`, alt: "dsm_logo" },
-    { src: `$/logos/stoltnielsen_logo.webp`, alt: "stoltnielsen_logo" },
-    { src: `$/logos/tpvision_logo.webp`, alt: "tpvision_logo" },
-    { src: `$/logos/swapfiets_logo.webp`, alt: "swapfiets_logo" },
-    { src: `$/logos/shv_logo.webp`, alt: "shv_logo" },
-    { src: `$/logos/vinci_logo.webp`, alt: "vinci_logo" },
-    { src: `$/logos/campina_logo.webp`, alt: "campina_logo" },
-    { src: `$/logos/jumbo_logo.webp`, alt: "jumbo_logo" },
-    { src: `$/logos/johnson_logo.webp`, alt: "johnson_logo" },
+    { src: `/logos/kiwa_logo.webp`, alt: "kiwa_logo" },
+    { src: `/logos/vanoord_logo.webp`, alt: "vanoord_logo" },
+    { src: `/logos/pon_logo.webp`, alt: "pon_logo" },
+    { src: `/logos/dsm_logo.webp`, alt: "dsm_logo" },
+    { src: `/logos/stoltnielsen_logo.webp`, alt: "stoltnielsen_logo" },
+    { src: `/logos/tpvision_logo.webp`, alt: "tpvision_logo" },
+    { src: `/logos/swapfiets_logo.webp`, alt: "swapfiets_logo" },
+    { src: `/logos/shv_logo.webp`, alt: "shv_logo" },
+    { src: `/logos/vinci_logo.webp`, alt: "vinci_logo" },
+    { src: `/logos/campina_logo.webp`, alt: "campina_logo" },
+    { src: `/logos/jumbo_logo.webp`, alt: "jumbo_logo" },
+    { src: `/logos/johnson_logo.webp`, alt: "johnson_logo" },
   ];
 
   return (
@@ -389,7 +389,7 @@ const ClientsPanel = ({ id }: { id: SectionId }) => {
         {/* Right */}
         <div className="w-full md:w-1/2 overflow-hidden md:block hidden mb-5">
           <img
-            src={`$/rups.webp`}
+            src={`/rups.webp`}
             alt="Our clients"
             className="w-full h-full object-cover"
             style={{ minHeight: "320px" }}
