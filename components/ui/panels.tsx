@@ -2,8 +2,6 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import { SECTION_IDS, SectionId } from "@/config/sections";
 
-
-
 // CONFIGURATION: Match these numbers to your FFmpeg output
 const SEQUENCES = {
   intro: {
@@ -262,58 +260,6 @@ const ContactPanel = ({ id }: { id: SectionId }) => {
               </span>
             </a>
             <br />
-            {/* Second Email Link */}
-            <a
-              href={`mailto:anne.kloosterboer@nowfornext.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`}
-              style={{
-                fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-                fontWeight: 400,
-                fontSize: "clamp(0.85rem, 1.3vw, 1rem)",
-                color: "#9EA9BA",
-                textDecoration: "none",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "4px",
-                userSelect: "text",
-                transition: "color 0.2s",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.color = "#1B286B";
-                const arrow =
-                  e.currentTarget.querySelector<HTMLSpanElement>(
-                    ".email-arrow",
-                  );
-                if (arrow) {
-                  arrow.style.opacity = "1";
-                  arrow.style.transform = "translateX(3px)";
-                }
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.color = "#9EA9BA";
-                const arrow =
-                  e.currentTarget.querySelector<HTMLSpanElement>(
-                    ".email-arrow",
-                  );
-                if (arrow) {
-                  arrow.style.opacity = "0";
-                  arrow.style.transform = "translateX(0)";
-                }
-              }}
-            >
-              anne.kloosterboer@nowfornext.org
-              <span
-                className="email-arrow"
-                style={{
-                  opacity: 0,
-                  transform: "translateX(0)",
-                  transition: "opacity 0.2s, transform 0.2s",
-                  fontSize: "0.9em",
-                  lineHeight: 1,
-                }}
-              >
-                →
-              </span>
-            </a>
           </p>
 
           <p
